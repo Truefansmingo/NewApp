@@ -14,19 +14,19 @@
         android:title="@string/app_search"/>
 
     <item
-        android:id="@+id/navigation_fav"
-        android:icon="@drawable/ic_save_black_24dp"
-        android:title="@string/app_fav"/>
-
-    <item
         android:id="@+id/navigation_post"
-        android:icon="@drawable/ic_save_black_24dp"
+        android:icon="@drawable/ic_post_24dp"
         android:title="@string/app_post"/>
 
     <item
+        android:id="@+id/navigation_fav"
+        android:icon="@drawable/ic_favorite_24dp"
+        android:title="@string/app_fav"/>
+
+    <item
         android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_save_black_24dp"
-        android:title="@string/app_profile"/>b
+        android:icon="@drawable/ic_profile_24dp"
+        android:title="@string/app_profile"/>
 
 
 </menu>
