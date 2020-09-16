@@ -2,11 +2,13 @@ package com.flagcamp.secondhands;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 
+import com.flagcamp.secondhands.navigation.KeepStateNavigator;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
@@ -16,12 +18,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-         BottomNavigationView navView = findViewById(R.id.nav_view);
-          NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
-                    .findFragmentById(R.id.nav_host_fragment);
-            navController = navHostFragment.getNavController();
-          NavigationUI.setupWithNavController(navView, navController);
-         NavigationUI.setupActionBarWithNavController(this, navController);
+        BottomNavigationView navView = findViewById(R.id.nav_view);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
+
+        Navigator navigator =
+                new KeepStateNavigator(this, navHostFragment.getChildFragmentManager(), R.id.nav_host_fragment);
+        navController.getNavigatorProvider().addNavigator(navigator);
+
+        navController.setGraph(R.navigation.nav_graph);
+        NavigationUI.setupWithNavController(navView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController);
     }
 
      @Override
