@@ -1,9 +1,9 @@
 <component name="libraryTable">
   <library name="Gradle: com.ashokvarma.android:gander-imdb:3.1.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b3f072cec974a4ebd68054f39de8d73/jetified-gander-imdb-3.1.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b3f072cec974a4ebd68054f39de8d73/jetified-gander-imdb-3.1.0/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/1b3f072cec974a4ebd68054f39de8d73/jetified-gander-imdb-3.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/81dc4043aaca16fe5bd94c442c13107a/jetified-gander-imdb-3.1.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/81dc4043aaca16fe5bd94c442c13107a/jetified-gander-imdb-3.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/81dc4043aaca16fe5bd94c442c13107a/jetified-gander-imdb-3.1.0/res" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.ashokvarma.android/gander-imdb/3.1.0/a9bfa8148b0ed67e11215f21a6ddb7a83c6a57a9/gander-imdb-3.1.0-javadoc.jar!/" />
