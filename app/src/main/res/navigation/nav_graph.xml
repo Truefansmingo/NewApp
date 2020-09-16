@@ -6,29 +6,29 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/navigation_home">
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_home"
         android:name="com.flagcamp.secondhands.ui.home.HomeFragment"
         android:label="@string/app_home"
         tools:layout="@layout/fragment_home" />
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_search"
         android:name="com.flagcamp.secondhands.ui.search.SearchFragment"
         android:label="@string/app_search"
         tools:layout="@layout/fragment_search" />
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_post"
         android:name="com.flagcamp.secondhands.ui.post.PostFragment"
         android:label="@string/app_post"
         tools:layout="@layout/fragment_post" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_profile"
         android:name="com.flagcamp.secondhands.ui.profile.ProfileFragment"
         android:label="@string/app_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <fragment
+    <keep_state_fragment
         android:id="@+id/navigation_fav"
         android:name="com.flagcamp.secondhands.ui.fav.FavFragment"
         android:label="@string/app_fav"

@@ -1,4 +1,5 @@
 <resources>
+    <string name="app_name">SecondHand</string>
     <string name="app_home">Home</string>
     <string name="app_search">Search</string>
     <string name="app_fav">Favorite</string>
