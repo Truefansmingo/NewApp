@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "165074733001",
+    "firebase_url": "https://androidsecondhandmarket.firebaseio.com",
+    "project_id": "androidsecondhandmarket",
+    "storage_bucket": "androidsecondhandmarket.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:165074733001:android:acdb4fd285f96f4b69ca18",
+        "android_client_info": {
+          "package_name": "com.flagcamp.secondhands"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "165074733001-61brsd33tjvv09kfjv4jbn8hk27osnts.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDokPrwc6BDu2iVbu8clSz8AvBheBEPZOw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "165074733001-61brsd33tjvv09kfjv4jbn8hk27osnts.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
