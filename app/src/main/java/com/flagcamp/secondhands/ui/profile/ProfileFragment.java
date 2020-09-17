@@ -43,7 +43,7 @@ public class ProfileFragment extends Fragment {
             Picasso.get().load(user.getPhotoUrl()).into(binding.profilePhotoImageView);
             binding.profileUserIdTextView.setText(user.getUid());
             binding.profileEmailTextView.setText(user.getEmail());
-//        binding.profileRatingScoreTextView.setText(getRating());
+//        binding.profileRatingScoreTextView.setText(getRating(user.getUid)); // 后端给getRating()
 
             binding.profileMessageView.setOnClickListener(new View.OnClickListener() {
                 @Override

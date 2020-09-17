@@ -63,3 +63,5 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.4.0'
     implementation 'com.firebaseui:firebase-ui-database:1.0.0'
 }
+
+apply plugin: "androidx.navigation.safeargs"
