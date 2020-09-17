@@ -2,65 +2,75 @@ package com.flagcamp.secondhands.ui.fav;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.flagcamp.secondhands.R;
+import com.flagcamp.secondhands.data.DummyData;
+import com.flagcamp.secondhands.data.Product;
+import com.flagcamp.secondhands.data.ProductViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link FavFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import com.flagcamp.secondhands.databinding.FragmentFavBinding;
+
+
 public class FavFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentFavBinding binding;
+    private FavViewModel viewModel;
+    private int id;
 
     public FavFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FavFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static FavFragment newInstance(String param1, String param2) {
-        FavFragment fragment = new FavFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fav, container, false);
+        binding = FragmentFavBinding.inflate(inflater,container,false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        FavProductAdapter favProductAdapter = new FavProductAdapter();
+        favProductAdapter.setItemCallback(new FavProductAdapter.ItemCallback() {
+            @Override
+            public void onOpenDetail(Product product) {
+                Log.d("onOpenProduct", product.toString());
+//                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
+//                NavHostFragment.findNavController(FavFragment.this).navigate(direction);
+            }
+            @Override
+            public void onRemoveFav(Product product) {
+                viewModel.deleteFavProduct(id, product);}
+            });
+
+        binding.favListsRecyclerView.setAdapter(favProductAdapter);
+        binding.favListsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+
+        DummyData data = new DummyData();
+        viewModel = new ViewModelProvider(this, new ProductViewModelFactory(data)).get(FavViewModel.class);
+        viewModel
+                .getFavProductList(id)
+                .observe(
+                        getViewLifecycleOwner(),
+                        savedProducts-> {
+                            if (savedProducts != null) {
+                                Log.d("SaveFragment", savedProducts.toString());
+                                favProductAdapter.setFavList(savedProducts);
+                            }
+                        });
+
     }
 }
