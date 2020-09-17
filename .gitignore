@@ -27,7 +27,8 @@ local.properties
 .idea/modules.xml
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
-*.iml
+.idea/modules/
+.idea/caches/
 
 # OS-specific files
 .DS_Store
