@@ -20,6 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.HomeProductViewHolder> {
+    interface ItemCallback {
+        void onOpenDetails(Product product);
+    }
+    private ItemCallback itemCallback;
+
+    public void setItemCallback(ItemCallback itemCallback) {
+        this.itemCallback = itemCallback;
+    }
     private List<Product> products = new ArrayList<>();
 
     public void setProducts(List<Product> productList){
@@ -42,9 +50,15 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
         holder.itemTitleTextView.setText(product.title);
         holder.itemPriceView.setText(product.price);
         holder.itemSellerView.setText(product.seller);
-        holder.itemImageView.setImageResource(R.drawable.ic_save_black_24dp);
-        //Picasso.get().load(product.urlToImage).into(holder.itemImageView);
-
+        //holder.itemImageView.setImageResource(R.drawable.ic_save_black_24dp);
+        Picasso.get().load(product.urlToImage.get(0)).into(holder.itemImageView);
+        holder.itemImageView.setOnClickListener(v -> itemCallback.onOpenDetails(product));
+        holder.itemImageView.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                itemCallback.onOpenDetails(product);
+            }
+        });
     }
 
     @Override
@@ -64,8 +78,8 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
             HomeProductItemBinding binding = HomeProductItemBinding.bind(itemView);
             favoriteImageView = binding.homeItemFavorite;
             itemImageView = binding.homeItemIamge;
-            itemTitleTextView = binding.homeItemTitle;
             itemSellerView = binding.homeItemSeller;
+            itemTitleTextView = binding.homeItemTitle;
             itemPriceView = binding.homeItemPrice;
         }
     }
