@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flagcamp.secondhands.R;
@@ -21,7 +22,7 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
 
     public void setFavList(List<Product> list){
         favList.clear();
-        favList.addAll(favList);
+        favList.addAll(list);
         notifyDataSetChanged();
     }
 

@@ -26,7 +26,8 @@ public class FavFragment extends Fragment {
 
     private FragmentFavBinding binding;
     private FavViewModel viewModel;
-    private int id;
+    private int id = 0;
+    private  final String tag = FavFragment.this.getClass().getSimpleName();
 
     public FavFragment() {
         // Required empty public constructor
@@ -54,21 +55,25 @@ public class FavFragment extends Fragment {
             @Override
             public void onRemoveFav(Product product) {
                 viewModel.deleteFavProduct(id, product);}
-            });
+        });
 
         binding.favListsRecyclerView.setAdapter(favProductAdapter);
         binding.favListsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         DummyData data = new DummyData();
         viewModel = new ViewModelProvider(this, new ProductViewModelFactory(data)).get(FavViewModel.class);
+        //viewModel.getFavProductList(id);
         viewModel
-                .getFavProductList(id)
+                .getFavProductList(id)  //return variable is favProducts
                 .observe(
                         getViewLifecycleOwner(),
-                        savedProducts-> {
-                            if (savedProducts != null) {
-                                Log.d("SaveFragment", savedProducts.toString());
-                                favProductAdapter.setFavList(savedProducts);
+                        favProducts-> {
+                            Log.d(tag,favProducts.toString());
+                            if (favProducts != null) {
+                                Log.d(tag, favProducts.toString());
+                                favProductAdapter.setFavList(favProducts);
+                            }else {
+                                Log.d(tag, "please add your first favoriabled produts");
                             }
                         });
 

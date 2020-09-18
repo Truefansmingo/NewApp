@@ -15,7 +15,7 @@ public class FavViewModel extends ViewModel {
 //
     //TODO: how to initalize the constructor
 
-//    public SaveViewModel(NewsRepository repository) {
+    //    public SaveViewModel(NewsRepository repository) {
 //        this.repository = repository;
 //    }
 //
@@ -31,7 +31,7 @@ public class FavViewModel extends ViewModel {
         this.data = data;
     }
     public LiveData<List<Product>> getFavProductList(int id){
-       List<Product> list = data.getFavProducts(id);
+        List<Product> list = data.getFavProducts(id);
         MutableLiveData<List<Product>> res = new MutableLiveData<>();
         res.setValue(list);
         return  res;
