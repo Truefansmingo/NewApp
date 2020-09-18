@@ -14,21 +14,16 @@ import java.util.Objects;
 public class Product implements Serializable {
     public String seller; // 搜索到自己post的商品
     public String description;
-
     public String location; // State: NJ CA NY
     public double lat;
     public double lon;
-
     public String postedAt; // (TBD)
     public String title;
     public String price;
     public final String id;
-
     public boolean status; // true for available, false for sold out
-
     public String urlToImageFolder;
     public List<String> urlToImage;
-
     public boolean favorite;
     public String category; //TBD
 
@@ -71,3 +66,8 @@ public class Product implements Serializable {
         return Objects.hash(seller, description, postedAt, title, price);
     }
 }
+
+/*
+
+
+*/

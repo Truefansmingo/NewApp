@@ -59,6 +59,21 @@ public class ProductDetailFragment extends Fragment {
 
 
         Product product = ProductDetailFragmentArgs.fromBundle(getArguments()).getProduct();
+        binding.productDetailFavorite.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                product.favorite = product.favorite == false ? true : false;
+                if(product.favorite == true){
+                    binding.productDetailFavorite.setImageResource(R.drawable.ic_favorite_24dp);
+                }else{
+                    binding.productDetailFavorite.setImageResource(R.drawable.ic_favorite_border_24dp);
+                }
+            }
+        });
+        if(product.favorite == true){
+            binding.productDetailFavorite.setImageResource(R.drawable.ic_favorite_24dp);
+        }else{
+            binding.productDetailFavorite.setImageResource(R.drawable.ic_favorite_border_24dp);
+        }
         binding.productDetailPriceView.setText(product.price);
         binding.productDetailDescriptionView.setText(product.description);
         binding.productDetailSellerView.setText(product.seller);

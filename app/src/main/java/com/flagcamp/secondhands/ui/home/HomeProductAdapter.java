@@ -46,10 +46,25 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     @Override
     public void onBindViewHolder(@NonNull HomeProductViewHolder holder, int position){
         Product product = products.get(position);
-        holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_24dp);
+        if(product.favorite == true){
+            holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_24dp);
+        }else{
+            holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_border_24dp);
+        }
+
         holder.itemTitleTextView.setText(product.title);
         holder.itemPriceView.setText(product.price);
         holder.itemSellerView.setText(product.seller);
+        holder.favoriteImageView.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                product.favorite = product.favorite == false ? true : false;
+                if(product.favorite == true){
+                    holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_24dp);
+                }else{
+                    holder.favoriteImageView.setImageResource(R.drawable.ic_favorite_border_24dp);
+                }
+            }
+        });
         //holder.itemImageView.setImageResource(R.drawable.ic_save_black_24dp);
         Picasso.get().load(product.urlToImage.get(0)).into(holder.itemImageView);
         holder.itemImageView.setOnClickListener(v -> itemCallback.onOpenDetails(product));
