@@ -51,8 +51,10 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
         Product product = favList.get(position);
         holder.productName.setText(product.title);
         holder.productPrice.setText(product.price);
-        holder.productLocation.setText(product.postedAt);
+        holder.productLocation.setText(product.location);
         holder.productStatus.setText(product.status);
+
+
         //check image is valid
         if(product.urlToImage == null){
             holder.productPhoto.setImageResource(R.drawable.ic_wrong_photo_18dp);
@@ -83,12 +85,12 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
         public FavProductViewHolder(@NonNull View itemView) {
             super(itemView);
             FavProductBinding binding = FavProductBinding.bind(itemView);
-            productName = binding.savedFavProductTitle;
-            productPrice = binding.savedFavProductPrice;
-            productLocation = binding.savedFavProductLocation;
-            productStatus = binding.savedFavProductStatus;
-            favIcon = binding.savedFavProductFavIcon;
-            productPhoto = binding.savedFavProductImageView;
+            productName = binding.favProductTitleContent;
+            productPrice = binding.favProductPriceContent;
+            productLocation = binding.favProductLocationContent;
+            productStatus = binding.favProductStatusContent;
+            favIcon = binding.favProductFavIcon;
+            productPhoto = binding.favProductImageView;
 
         }
     }

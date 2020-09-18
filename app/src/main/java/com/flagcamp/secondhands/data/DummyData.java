@@ -10,13 +10,15 @@ import java.util.Map;
 public class DummyData {
     Map<Integer, List<Product>> map;
     //data source
+    //String seller, String description, String title, String price
     Product p1 = new Product(
-            1, "Sell_One","This is a laptop","San Francisco","Laptop","$1000","","",true, "available");
+            "Sell_One","This is a laptop","Laptop","$1000");
     Product p2 = new Product(
-            2, "Sell_Two","This is a table","NewYork","Table","$50","","",true, "available");
+            "Sell_Two","This is a table","Table","$50");
 
     Product p3 = new Product(
-            3,"Sell_Tree","This is a watch","San Jose","Watch","$100","","",true , "available");
+            "Sell_Three","This is a watch","Watch","$100");
+
 
     User user= new User();
     private final int id1 = user.addUser();
@@ -27,9 +29,13 @@ public class DummyData {
         map = new HashMap<>();
         map.put(id1, new ArrayList<>());
         map.put(id2, new ArrayList<>());
-        map.get(id1).add(p1);
-        map.get(id1).add(p2);
-        map.get(id2).add(p3);
+        for(int i = 0; i <10; i++){
+            map.get(id1).add(p1);
+            map.get(id1).add(p2);
+        }
+        for(int i = 0; i <10; i++){
+            map.get(id2).add(p3);
+        }
 
     }
 

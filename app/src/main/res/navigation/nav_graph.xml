@@ -40,10 +40,14 @@
     </keep_state_fragment>
 
     <fragment
-        android:id="@+id/navigation_details"
-        android:name="com.flagcamp.secondhands.ui.details.DetailsFragment"
-        android:label="Details"
-        tools:layout="@layout/fragment_details" />
+        android:id="@+id/navigation_detail"
+        android:name="com.flagcamp.secondhands.ui.productDetail.ProductDetailFragment"
+        android:label="@string/app_detail"
+        tools:layout="@layout/fragment_product_detail">
+        <argument
+            android:name="product"
+            app:argType="com.flagcamp.secondhands.data.Product"/>
+    </fragment>
 
 
 </navigation>

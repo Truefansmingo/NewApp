@@ -19,6 +19,8 @@ import com.flagcamp.secondhands.data.DummyData;
 import com.flagcamp.secondhands.data.Product;
 import com.flagcamp.secondhands.data.ProductViewModelFactory;
 
+
+
 import com.flagcamp.secondhands.databinding.FragmentFavBinding;
 
 
@@ -48,12 +50,15 @@ public class FavFragment extends Fragment {
         favProductAdapter.setItemCallback(new FavProductAdapter.ItemCallback() {
             @Override
             public void onOpenDetail(Product product) {
+                //TODO:can find product info on LogCat
                 Log.d("onOpenProduct", product.toString());
-//                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
-//                NavHostFragment.findNavController(FavFragment.this).navigate(direction);
+                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
+                NavHostFragment.findNavController(FavFragment.this).navigate(direction);
+
             }
             @Override
             public void onRemoveFav(Product product) {
+                Log.d("onDeleteFav", product.toString());
                 viewModel.deleteFavProduct(id, product);}
         });
 
