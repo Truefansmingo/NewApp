@@ -29,6 +29,8 @@ local.properties
 .idea/vcs.xml
 .idea/modules/
 .idea/caches/
+.idea/gradle.xml
+.idea/assetWizardSettings.xml
 
 # OS-specific files
 .DS_Store
