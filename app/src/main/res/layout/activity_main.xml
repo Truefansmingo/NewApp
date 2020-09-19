@@ -15,8 +15,8 @@
         android:textAlignment="center"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph"
         />
+        <!--app:navGraph="@navigation/nav_graph"-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"

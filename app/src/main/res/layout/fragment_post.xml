@@ -12,6 +12,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="this is for posting products"
-        android:textSize="25sp" />/>
+        android:textSize="25sp" />
 
 </FrameLayout>
