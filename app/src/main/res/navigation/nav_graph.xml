@@ -6,54 +6,75 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/navigation_home">
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_home"
         android:name="com.flagcamp.secondhands.ui.home.HomeFragment"
         android:label="@string/app_home"
         tools:layout="@layout/fragment_home" />
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_search"
         android:name="com.flagcamp.secondhands.ui.search.SearchFragment"
         android:label="@string/app_search"
         tools:layout="@layout/fragment_search" />
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_post"
         android:name="com.flagcamp.secondhands.ui.post.PostFragment"
         android:label="@string/app_post"
         tools:layout="@layout/fragment_post" />
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.flagcamp.secondhands.ui.profile.ProfileFragment"
         android:label="@string/app_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_navigation_profile_to_navigation_chatRoom"
+            app:destination="@id/navigation_chatRoom" />
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_visitor_view_profile"
         android:name="com.flagcamp.secondhands.ui.profile.VisitorViewProfileFragment"
         android:label="@string/app_visitor_view_profile"
         tools:layout="@layout/fragment_visitor_view_profile" >
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_visitor_view_profile_to_navigation_message"-->
+<!--            app:destination="@id/navigation_message" />-->
         <argument
             android:name="user"
             app:argType="com.flagcamp.secondhands.model.User" />
-    </keep_state_fragment>
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_fav"
         android:name="com.flagcamp.secondhands.ui.fav.FavFragment"
         android:label="@string/app_fav"
         tools:layout="@layout/fragment_fav" />
 
-    <keep_state_fragment
-        android:id="@+id/navigation_Message"
+    <fragment
+        android:id="@+id/navigation_chatRoom"
+        android:name="com.flagcamp.secondhands.ui.chat.ChatRoomFragment"
+        android:label="@string/app_chat"
+        tools:layout="@layout/fragment_chat_room" >
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_chatRoom_to_navigation_message"-->
+<!--            app:destination="@id/navigation_message" />-->
+        <argument
+            android:name="user"
+            app:argType="com.flagcamp.secondhands.model.User" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_message"
         android:name="com.flagcamp.secondhands.ui.chat.MessageListFragment"
         android:label="@string/app_message"
         tools:layout="@layout/fragment_message_list" >
         <argument
             android:name="user"
             app:argType="com.flagcamp.secondhands.model.User" />
-    </keep_state_fragment>
+
+    </fragment>
 
 </navigation>

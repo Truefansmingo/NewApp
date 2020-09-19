@@ -38,93 +38,39 @@
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="320dp"
-            android:layout_height="120dp"
+            android:layout_width="200dp"
+            android:layout_height="800dp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="250dp" >
+            android:layout_marginTop="315dp" >
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:weightSum="3" >
+                android:weightSum="2" >
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/profile_chatRoom_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:background="@color/backgroundBlue"
+                    android:text="Chat Room"
+                    android:textColor="@android:color/white"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Rating"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/profile_rating_score_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="4.5/5"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/backgroundBlue" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_message_view"
+                <Button
+                    android:id="@+id/profile_order_button"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Message"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/profile_message_count_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/backgroundBlue" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/profile_order_view"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Order"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:id="@+id/profile_order_management_text_view"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3"
-                        android:textStyle="bold"
-                        android:textSize="20sp"
-                        android:paddingTop="10dp"
-                        android:textColor="@color/backgroundBlue" />
-
-                </LinearLayout>
+                    android:gravity="center"
+                    android:layout_marginLeft="30dp"
+                    android:textSize="12sp"
+                    android:background="@color/backgroundBlue"
+                    android:text="Order"
+                    android:textColor="@android:color/white"/>
 
             </LinearLayout>
             
@@ -133,11 +79,11 @@
     </RelativeLayout>
     
     <LinearLayout
-        android:layout_width="280dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_gravity="center"
-        android:layout_marginTop="30dp" >
+        android:layout_marginTop="20dp" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -149,7 +95,7 @@
                 android:src="@drawable/ic_user_id_24" />
 
             <TextView
-                android:layout_width="35dp"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
@@ -176,7 +122,7 @@
                 android:src="@drawable/ic_email_24" />
 
             <TextView
-                android:layout_width="35dp"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
@@ -189,6 +135,33 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:text="RobertDowneyJr@gmail.com" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp" >
+
+            <ImageView
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/ic_star_24" />
+
+            <TextView
+                android:layout_width="42dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="4dp"
+                android:text="Rating" />
+
+            <TextView
+                android:id="@+id/profile_rating_score_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="20dp"
+                android:text="4.5/5" />
 
         </LinearLayout>
 

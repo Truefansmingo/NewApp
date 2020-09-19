@@ -5,12 +5,17 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.flagcamp.secondhands.databinding.FragmentProfileBinding;
+import com.flagcamp.secondhands.model.User;
+import com.flagcamp.secondhands.ui.chat.ChatRoomFragment;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -20,6 +25,8 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
+    private User user;
+    private FirebaseAuth auth;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -37,22 +44,28 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            binding.profileNameTextView.setText(user.getDisplayName());
-            Picasso.get().load(user.getPhotoUrl()).into(binding.profilePhotoImageView);
-            binding.profileUserIdTextView.setText(user.getUid());
-            binding.profileEmailTextView.setText(user.getEmail());
-//        binding.profileRatingScoreTextView.setText(getRating(user.getUid)); // 后端给getRating()
+        auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
 
-            binding.profileMessageView.setOnClickListener(new View.OnClickListener() {
+        if (currentUser != null) {
+            binding.profileNameTextView.setText(currentUser.getDisplayName());
+            Picasso.get().load(currentUser.getPhotoUrl()).into(binding.profilePhotoImageView);
+            binding.profileUserIdTextView.setText(currentUser.getUid());
+            binding.profileEmailTextView.setText(currentUser.getEmail());
+//        binding.profileRatingScoreTextView.setText(getRating(currentUser.getUid)); // 后端给getRating()
+
+            user.userId = currentUser.getUid();
+            user.name = currentUser.getDisplayName();
+            binding.profileChatRoomButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // link to Message List Page
+                    ProfileFragmentDirections.ActionNavigationProfileToNavigationChatRoom direction = ProfileFragmentDirections.actionNavigationProfileToNavigationChatRoom(user);
+                    NavHostFragment.findNavController(ProfileFragment.this).navigate(direction);
                 }
             });
 
-            binding.profileOrderView.setOnClickListener(new View.OnClickListener() {
+            binding.profileOrderButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     // link to Order Management page
