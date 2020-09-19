@@ -35,7 +35,7 @@
         tools:layout="@layout/fragment_fav" >
         <action
             android:id="@+id/action_navigation_fav_to_navigation_details"
-            app:destination="@id/navigation_details"
+            app:destination="@id/navigation_detail"
             />
     </keep_state_fragment>
 
@@ -43,11 +43,11 @@
         android:id="@+id/navigation_detail"
         android:name="com.flagcamp.secondhands.ui.productDetail.ProductDetailFragment"
         android:label="@string/app_detail"
-        tools:layout="@layout/fragment_product_detail">
-        <argument
-            android:name="product"
-            app:argType="com.flagcamp.secondhands.data.Product"/>
-    </fragment>
+        tools:layout="@layout/fragment_product_detail" />
+<!--        <argument-->
+<!--            android:name="product"-->
+<!--            app:argType="com.flagcamp.secondhands.data.Product"/>-->
+<!--    </fragment>-->
 
 
 </navigation>

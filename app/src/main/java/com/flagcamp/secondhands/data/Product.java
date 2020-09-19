@@ -18,7 +18,8 @@ public class Product {
     public int id = 0;
 
   //  public boolean status; // true for available, false for sold out
-    public String status;
+    //public String status;
+    public boolean status;
     public String urlToImageFolder;
     public List<String> urlToImage;
 
@@ -35,7 +36,7 @@ public class Product {
         this.title = title;
         this.price = price;
         id++;
-        status = "Available";
+        status = true;
         urlToImageFolder = null;
         urlToImage = null;
         favorite = true;

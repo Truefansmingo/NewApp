@@ -52,8 +52,8 @@ public class FavFragment extends Fragment {
             public void onOpenDetail(Product product) {
                 //TODO:can find product info on LogCat
                 Log.d("onOpenProduct", product.toString());
-                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
-                NavHostFragment.findNavController(FavFragment.this).navigate(direction);
+//                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
+//                NavHostFragment.findNavController(FavFragment.this).navigate(direction);
 
             }
             @Override

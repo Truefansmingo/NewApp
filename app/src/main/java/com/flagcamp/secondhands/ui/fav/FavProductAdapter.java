@@ -52,7 +52,12 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
         holder.productName.setText(product.title);
         holder.productPrice.setText(product.price);
         holder.productLocation.setText(product.location);
-        holder.productStatus.setText(product.status);
+        if(product.status){
+            holder.productStatus.setText("Available");
+        }else{
+            holder.productStatus.setText("Soldout");
+        }
+
 
 
         //check image is valid
