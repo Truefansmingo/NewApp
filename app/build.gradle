@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -60,8 +61,11 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.google.firebase:firebase-auth:19.4.0'
+    implementation 'com.google.firebase:firebase-core:17.5.0'       //Analytics
+    implementation 'com.google.firebase:firebase-auth:19.4.0'       //Authentication
     implementation 'com.firebaseui:firebase-ui-database:1.0.0'
+    implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
+    implementation 'com.google.firebase:firebase-analytics:17.5.0'
+    implementation 'com.google.firebase:firebase-firestore:21.6.0'  //Cloud Firestore
+    implementation 'com.google.firebase:firebase-storage:19.2.0'    //Storage
 }
-
-apply plugin: "androidx.navigation.safeargs"

@@ -60,6 +60,8 @@ public class ProfileFragment extends Fragment {
             });
 
             binding.profileLogoutButton.setOnClickListener(v -> FirebaseAuth.getInstance().signOut());
+        } else {
+            // login fragment
         }
 
     }

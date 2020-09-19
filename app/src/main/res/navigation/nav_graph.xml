@@ -46,4 +46,14 @@
         android:label="@string/app_fav"
         tools:layout="@layout/fragment_fav" />
 
+    <keep_state_fragment
+        android:id="@+id/navigation_Message"
+        android:name="com.flagcamp.secondhands.ui.chat.MessageListFragment"
+        android:label="@string/app_message"
+        tools:layout="@layout/fragment_message_list" >
+        <argument
+            android:name="user"
+            app:argType="com.flagcamp.secondhands.model.User" />
+    </keep_state_fragment>
+
 </navigation>
