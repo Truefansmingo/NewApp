@@ -25,9 +25,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
      @Override
-        public boolean onSupportNavigateUp() {
+     public boolean onSupportNavigateUp() {
             return navController.navigateUp();
-         }
+     }
 }
 
 
