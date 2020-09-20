@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
@@ -28,7 +27,7 @@
         android:id="@+id/navigation_profile"
         android:name="com.flagcamp.secondhands.ui.profile.ProfileFragment"
         android:label="@string/app_profile"
-        tools:layout="@layout/fragment_profile" >
+        tools:layout="@layout/fragment_profile">
         <action
             android:id="@+id/action_navigation_profile_to_navigation_chatRoom"
             app:destination="@id/navigation_chatRoom" />
@@ -38,10 +37,10 @@
         android:id="@+id/navigation_visitor_view_profile"
         android:name="com.flagcamp.secondhands.ui.profile.VisitorViewProfileFragment"
         android:label="@string/app_visitor_view_profile"
-        tools:layout="@layout/fragment_visitor_view_profile" >
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_visitor_view_profile_to_navigation_message"-->
-<!--            app:destination="@id/navigation_message" />-->
+        tools:layout="@layout/fragment_visitor_view_profile">
+        <action
+            android:id="@+id/action_navigation_visitor_view_profile_to_navigation_message"
+            app:destination="@id/navigation_message" />
         <argument
             android:name="user"
             app:argType="com.flagcamp.secondhands.model.User" />
@@ -57,10 +56,10 @@
         android:id="@+id/navigation_chatRoom"
         android:name="com.flagcamp.secondhands.ui.chat.ChatRoomFragment"
         android:label="@string/app_chat"
-        tools:layout="@layout/fragment_chat_room" >
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_chatRoom_to_navigation_message"-->
-<!--            app:destination="@id/navigation_message" />-->
+        tools:layout="@layout/fragment_chat_room">
+        <action
+            android:id="@+id/action_navigation_chatRoom_to_navigation_message"
+            app:destination="@id/navigation_message" />
         <argument
             android:name="user"
             app:argType="com.flagcamp.secondhands.model.User" />
@@ -70,7 +69,7 @@
         android:id="@+id/navigation_message"
         android:name="com.flagcamp.secondhands.ui.chat.MessageListFragment"
         android:label="@string/app_message"
-        tools:layout="@layout/fragment_message_list" >
+        tools:layout="@layout/fragment_message_list">
         <argument
             android:name="user"
             app:argType="com.flagcamp.secondhands.model.User" />

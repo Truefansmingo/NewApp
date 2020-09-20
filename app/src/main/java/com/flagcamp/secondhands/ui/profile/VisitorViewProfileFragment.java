@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import com.flagcamp.secondhands.R;
 import com.flagcamp.secondhands.databinding.FragmentVisitorViewProfileBinding;
 import com.flagcamp.secondhands.model.User;
 import com.flagcamp.secondhands.ui.chat.ChatFragmentAdapter;
+import com.flagcamp.secondhands.ui.chat.ChatRoomFragment;
+import com.flagcamp.secondhands.ui.chat.ChatRoomFragmentDirections;
 import com.flagcamp.secondhands.ui.chat.MessageListFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -46,21 +49,13 @@ public class VisitorViewProfileFragment extends Fragment implements ChatFragment
         Picasso.get().load(user.photoUrl).into(binding.visitorViewProfilePhotoImageView);
         binding.visitorViewProfileEmailTextView.setText(user.email);
         binding.visitorViewProfileRatingScoreTextView.setText(user.rating);
-        MessageListFragment messageListFragment = new MessageListFragment();
-        binding.visitorViewProfileChatButton.setOnClickListener(v -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("userId", user);
-            bundle.putString("senderId", user.userId);
-            MessageListFragment messageFragment = new MessageListFragment();
-            messageFragment.setArguments(bundle);
-            openMessageWindow(messageFragment);
-        });
+        binding.visitorViewProfileChatButton.setOnClickListener(v -> openMessageWindow(user));
     }
 
     @Override
-    public void openMessageWindow(MessageListFragment messageFragment) {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction().replace(R.id.nav_host_fragment, messageFragment,"Message Fragment").addToBackStack(null);
-        fragmentTransaction.commit();
+    public void openMessageWindow(User user) {
+        VisitorViewProfileFragmentDirections.ActionNavigationVisitorViewProfileToNavigationMessage direction = VisitorViewProfileFragmentDirections.actionNavigationVisitorViewProfileToNavigationMessage(user);
+        NavHostFragment.findNavController(VisitorViewProfileFragment.this).navigate(direction);
     }
+
 }

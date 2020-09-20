@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.databinding.FragmentMessageListBinding;
 import com.flagcamp.secondhands.model.Message;
 import com.flagcamp.secondhands.model.User;
@@ -29,14 +30,8 @@ public class MessageListFragment extends Fragment{
     private FragmentMessageListBinding binding;
     List<Message> messageList = new ArrayList<>();
     private MessageAdapter messageAdapter;
-    private User user;
-    private DatabaseReference myRef, userRef;
+    private DatabaseReference myRef;
     private FirebaseDatabase database;
-
-    private FirebaseAuth auth;
-    private String senderId;
-    private String messageId="";
-    private ValueEventListener val;
 
     public MessageListFragment() {
         // Required empty public constructor
@@ -49,22 +44,26 @@ public class MessageListFragment extends Fragment{
         binding = FragmentMessageListBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
 
-        auth = FirebaseAuth.getInstance();
-        senderId = getArguments().getString("userId");
-        user = (User) getArguments().getSerializable("createdById");
+        CurrentUserSingleton currentUser = CurrentUserSingleton.getInstance();
+        User sender = MessageListFragmentArgs.fromBundle(getArguments()).getUser();
 
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("messages/" + senderId);
+        String chatRoomName = currentUser.getUserId() + ',' + sender.userId;
+        if (Integer.parseInt(currentUser.getUserId()) > Integer.parseInt(sender.userId)) {
+            chatRoomName = sender.userId + ',' + currentUser.getUserId();
+        }
+        
+        myRef = database.getReference("chatRooms/chatRoom/" + chatRoomName + '/');
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 messageList.clear();
-                for (DataSnapshot val: dataSnapshot.getChildren()) {
-                    Message message = val.getValue(Message.class);
+                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                    Message message = child.getValue(Message.class);
                     messageList.add(message);
 
                     binding.messageListRecyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-                    messageAdapter = new MessageAdapter(user, senderId, messageList);
+                    messageAdapter = new MessageAdapter(sender, messageList);
                     binding.messageListRecyclerview.setAdapter(messageAdapter);
                     messageAdapter.notifyDataSetChanged();
                     binding.messageListRecyclerview.smoothScrollToPosition(messageList.size() - 1);
@@ -80,7 +79,7 @@ public class MessageListFragment extends Fragment{
         binding.chatboxSendButton.setOnClickListener(v -> {
             if (!binding.chatboxEdittext.getText().toString().isEmpty()) {
                 String messageId = myRef.push().getKey();
-                Message message = new Message(messageId, user.name, binding.chatboxEdittext.getText().toString(), user.userId, user.photoUrl);
+                Message message = new Message(messageId, sender.name, binding.chatboxEdittext.getText().toString(), sender.userId, sender.photoUrl);
                 myRef.child(messageId).setValue(message);
                 binding.chatboxEdittext.setText("");
             }

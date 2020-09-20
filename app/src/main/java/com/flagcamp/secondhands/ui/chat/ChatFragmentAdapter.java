@@ -3,6 +3,7 @@ package com.flagcamp.secondhands.ui.chat;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +24,11 @@ import java.util.List;
 
 public class ChatFragmentAdapter extends RecyclerView.Adapter<ChatFragmentAdapter.ViewHolder> {
 
-    User user;
     List<ChatRoom> chatRoomList;
     ChatFragmentInterface chatFragmentInterface;
 
-    public ChatFragmentAdapter(User user, List<ChatRoom> chatRoomList, ChatFragmentInterface chatFragmentInterface) {
+    public ChatFragmentAdapter(List<ChatRoom> chatRoomList, ChatFragmentInterface chatFragmentInterface) {
         this.chatRoomList = chatRoomList;
-        this.user = user;
         this.chatFragmentInterface = chatFragmentInterface;
     }
 
@@ -38,22 +37,20 @@ public class ChatFragmentAdapter extends RecyclerView.Adapter<ChatFragmentAdapte
     public ChatFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, parent, false);
         ViewHolder viewHolder = new ChatFragmentAdapter.ViewHolder(view);
+
+        Log.d("test", "create " + viewHolder.toString());
+
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull ChatFragmentAdapter.ViewHolder holder, int position) {
-        final ChatRoom chatRoom = chatRoomList.get(position);
-        holder.senderName.setText(chatRoom.getUserName());
+        Log.d("test", "bind " + holder.toString());
 
-        holder.chatButton.setOnClickListener(view -> {
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("userId", user);
-            bundle.putString("senderId", chatRoomList.get(position).getUserId());
-            MessageListFragment messageFragment = new MessageListFragment();
-            messageFragment.setArguments(bundle);
-            chatFragmentInterface.openMessageWindow(messageFragment);
-        });
+        final ChatRoom chatRoom = chatRoomList.get(position);
+        holder.senderName.setText(chatRoom.getSenderName());
+        User user = new User(chatRoom.getSenderId(), chatRoom.getSenderName());
+        holder.chatButton.setOnClickListener(v -> chatFragmentInterface.openMessageWindow(user));
     }
 
     @Override
@@ -62,7 +59,7 @@ public class ChatFragmentAdapter extends RecyclerView.Adapter<ChatFragmentAdapte
     }
 
     public interface ChatFragmentInterface {
-        void openMessageWindow(MessageListFragment message);
+        void openMessageWindow(User user);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

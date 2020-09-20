@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
-apply plugin: 'com.google.gms.google-services'
+
 
 android {
     compileSdkVersion 29
@@ -43,6 +43,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    implementation 'androidx.annotation:annotation:1.1.0'
     debugImplementation 'com.ashokvarma.android:gander-imdb:3.1.0'//    <!--Gander libary, 用于debug tool-->
     releaseImplementation 'com.ashokvarma.android:gander-no-op:3.1.0'
     annotationProcessor 'androidx.lifecycle:lifecycle-common-java8:2.2.0' // 读取所有的annotation并自动generate代码
@@ -68,4 +69,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
     implementation 'com.google.firebase:firebase-firestore:21.6.0'  //Cloud Firestore
     implementation 'com.google.firebase:firebase-storage:19.2.0'    //Storage
+    implementation 'com.google.firebase:firebase-database:19.4.0'   //Database
+
+    implementation 'com.google.android.gms:play-services-auth:18.1.0'
 }
+
+apply plugin: 'com.google.gms.google-services'

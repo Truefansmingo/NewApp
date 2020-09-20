@@ -29,16 +29,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private List<Message> messageList;
     private User user;
-    private String senderId;
-    private DatabaseReference myRef;
-    private FirebaseDatabase database;
 
-    public MessageAdapter(User user, String senderId, List<Message> messageList) {
+    public MessageAdapter(User user, List<Message> messageList) {
         this.messageList = messageList;
-        this.senderId = senderId;
         this.user = user;
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("messages/" + this.senderId);
     }
 
     @Override

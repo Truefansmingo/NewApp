@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.databinding.FragmentProfileBinding;
 import com.flagcamp.secondhands.model.User;
 import com.flagcamp.secondhands.ui.chat.ChatRoomFragment;
@@ -25,8 +26,6 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment {
 
     private FragmentProfileBinding binding;
-    private User user;
-    private FirebaseAuth auth;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -44,18 +43,17 @@ public class ProfileFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        auth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = auth.getCurrentUser();
+
+        CurrentUserSingleton currentUser = CurrentUserSingleton.getInstance();
 
         if (currentUser != null) {
-            binding.profileNameTextView.setText(currentUser.getDisplayName());
+            binding.profileNameTextView.setText(currentUser.getUserName());
             Picasso.get().load(currentUser.getPhotoUrl()).into(binding.profilePhotoImageView);
-            binding.profileUserIdTextView.setText(currentUser.getUid());
+            binding.profileUserIdTextView.setText(currentUser.getUserId());
             binding.profileEmailTextView.setText(currentUser.getEmail());
-//        binding.profileRatingScoreTextView.setText(getRating(currentUser.getUid)); // 后端给getRating()
+            binding.profileRatingScoreTextView.setText(currentUser.getRating());
 
-            user.userId = currentUser.getUid();
-            user.name = currentUser.getDisplayName();
+            User user = new User(currentUser.getUserId(), currentUser.getUserName());
             binding.profileChatRoomButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
