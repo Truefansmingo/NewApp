@@ -1,6 +1,6 @@
-package com.flagcamp.secondhands.data;
+package com.flagcamp.secondhands.model;
 
-import android.support.v4.app.INotificationSideChannel;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class DummyData {
     Map<Integer, List<Product>> map;
+    private final String tag =  DummyData.this.getClass().getSimpleName();
     //data source
     //String seller, String description, String title, String price
     Product p1 = new Product(
@@ -46,10 +47,12 @@ public class DummyData {
 
     public boolean deleteFav(int userId, Product product){
         if(!map.containsKey(userId)) {
+            Log.d(tag, "no userId: "+ userId );
             return false;
         }
         List<Product> productList = map.get(userId);
         productList.remove(product);
+        Log.d(tag, "List size is "+ productList.size() );
         return true;
     }
 

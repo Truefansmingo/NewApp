@@ -7,35 +7,34 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flagcamp.secondhands.R;
-import com.flagcamp.secondhands.data.Product;
 import com.flagcamp.secondhands.databinding.FavProductBinding;
+import com.flagcamp.secondhands.model.Product;
+import com.squareup.picasso.Picasso;
+
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.FavProductViewHolder> {
     private List<Product> favList = new ArrayList<>();
+    private ItemCallBack itemCallBack;
 
-    public void setFavList(List<Product> list){
+    public void updateFavList(List<Product> list){
         favList.clear();
         favList.addAll(list);
         notifyDataSetChanged();
     }
 
-    interface ItemCallback{
+    interface ItemCallBack{
         void onOpenDetail(Product product);
         void onRemoveFav(Product product);
     }
 
-    private ItemCallback itemCallback;
-
-
-    public void setItemCallback(ItemCallback itemCallback){
-        this.itemCallback = itemCallback;
+    public void setItemCallBack(ItemCallBack itemCallBack){
+        this.itemCallBack = itemCallBack;
     }
 
 
@@ -58,18 +57,14 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
             holder.productStatus.setText("Soldout");
         }
 
-
-
         //check image is valid
         if(product.urlToImage == null){
             holder.productPhoto.setImageResource(R.drawable.ic_wrong_photo_18dp);
         }else{
-            holder.productPhoto.setImageResource(R.drawable.ic_correct_18dp);
+           Picasso.get().load(product.urlToImage.get(0)).into(holder.productPhoto);
         }
-        //remove the fav item
-        holder.favIcon.setOnClickListener(v -> itemCallback.onRemoveFav(product));
-        //click the details
-        holder.itemView.setOnClickListener(v -> itemCallback.onOpenDetail(product));
+        holder.favIcon.setOnClickListener(v-> itemCallBack.onRemoveFav(product));
+        holder.itemView.setOnClickListener(v -> itemCallBack.onOpenDetail(product));
     }
 
     @Override
@@ -89,6 +84,7 @@ public class FavProductAdapter extends RecyclerView.Adapter<FavProductAdapter.Fa
 
         public FavProductViewHolder(@NonNull View itemView) {
             super(itemView);
+
             FavProductBinding binding = FavProductBinding.bind(itemView);
             productName = binding.favProductTitleContent;
             productPrice = binding.favProductPriceContent;

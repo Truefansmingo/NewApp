@@ -1,10 +1,5 @@
-package com.flagcamp.secondhands.data;
+package com.flagcamp.secondhands.model;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class User {
     int id;

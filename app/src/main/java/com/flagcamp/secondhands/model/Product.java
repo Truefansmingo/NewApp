@@ -1,9 +1,10 @@
-package com.flagcamp.secondhands.data;
+package com.flagcamp.secondhands.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
 
     public String seller; // 搜索到自己post的商品
     public String description;

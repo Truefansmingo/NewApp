@@ -4,39 +4,26 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.flagcamp.secondhands.data.DummyData;
-import com.flagcamp.secondhands.data.Product;
-import com.flagcamp.secondhands.data.User;
+import com.flagcamp.secondhands.model.DummyData;
+import com.flagcamp.secondhands.model.Product;
+import com.flagcamp.secondhands.repository.ProductRepository;
 
 import java.util.List;
 
 public class FavViewModel extends ViewModel {
-//    private final ProductsRepository repository;
-//
-    //TODO: how to initalize the constructor
+      private final ProductRepository repository;
 
-    //    public SaveViewModel(NewsRepository repository) {
-//        this.repository = repository;
-//    }
-//
-//    public boolean deleteSavedArticle(Article article) {
-//        return repository.deleteSavedArticle(article);
-//    }
-//
-//    public List<Product> getAllSavedProducts(){
-//        return List<Product>;
-//    }
-    DummyData data;
-    public FavViewModel(DummyData data){
-        this.data = data;
+        public FavViewModel(ProductRepository repository) {
+        this.repository = repository;
     }
-    public LiveData<List<Product>> getFavProductList(int id){
-        List<Product> list = data.getFavProducts(id);
-        MutableLiveData<List<Product>> res = new MutableLiveData<>();
-        res.setValue(list);
-        return  res;
+
+    public  LiveData<List<Product>> getFavProductList(int uid){
+            return repository.getFavProductList(uid);
     }
-    public boolean deleteFavProduct(int id, Product product){
-        return data.deleteFav(id,product);
+
+    public void deleteFavProduct(int id, Product product){
+            repository.deleteFavProduct(id,product);
     }
+
+
 }

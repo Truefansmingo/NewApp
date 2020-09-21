@@ -28,7 +28,7 @@
         android:label="@string/app_profile"
         tools:layout="@layout/fragment_profile" />
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_fav"
         android:name="com.flagcamp.secondhands.ui.fav.FavFragment"
         android:label="@string/app_fav"
@@ -36,18 +36,21 @@
         <action
             android:id="@+id/action_navigation_fav_to_navigation_details"
             app:destination="@id/navigation_detail"
-            />
-    </keep_state_fragment>
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right">
+
+            <argument
+                android:name="product"
+                android:defaultValue="@null"
+                app:argType="com.flagcamp.secondhands.model.Product"
+                app:nullable="true" />
+        </action>
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_detail"
         android:name="com.flagcamp.secondhands.ui.productDetail.ProductDetailFragment"
         android:label="@string/app_detail"
         tools:layout="@layout/fragment_product_detail" />
-<!--        <argument-->
-<!--            android:name="product"-->
-<!--            app:argType="com.flagcamp.secondhands.data.Product"/>-->
-<!--    </fragment>-->
-
 
 </navigation>
