@@ -23,8 +23,4 @@ public class SentMessageViewHolder extends RecyclerView.ViewHolder {
         time = itemView.findViewById(R.id.message_time_text);
     }
 
-    void bind(Message message) {
-        text.setText(message.getMessageText());
-        time.setText(DateFormat.format("dd MMM  (h:mm a)", message.getMessageTime()));
-    }
 }

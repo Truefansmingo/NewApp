@@ -27,9 +27,4 @@ public class ReceivedMessageViewHolder extends RecyclerView.ViewHolder {
         imgProfile = itemView.findViewById(R.id.message_profile_image);
     }
 
-    void bind(Message message) {
-        text.setText(message.getMessageText());
-        time.setText(DateFormat.format("dd MMM  (h:mm a)", message.getMessageTime()));
-        username.setText(message.getMessageUsername());
-    }
 }

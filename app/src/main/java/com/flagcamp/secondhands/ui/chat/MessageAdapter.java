@@ -3,6 +3,7 @@ package com.flagcamp.secondhands.ui.chat;
 import android.content.Context;
 import android.text.Layout;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +13,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.R;
+import com.flagcamp.secondhands.model.ChatRoom;
 import com.flagcamp.secondhands.model.Message;
 import com.flagcamp.secondhands.model.User;
 
@@ -28,17 +31,16 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private final int MY_TEXT_MESSAGE = 0, THEIR_TEXT_MESSAGE = 1;
 
     private List<Message> messageList;
-    private User user;
+    CurrentUserSingleton currentUser = CurrentUserSingleton.getInstance();
 
-    public MessageAdapter(User user, List<Message> messageList) {
+    public MessageAdapter(List<Message> messageList) {
         this.messageList = messageList;
-        this.user = user;
     }
 
     @Override
     public int getItemViewType(int position) {
         Message message = messageList.get(position);
-        if (message.getMessageUserId().equals(user.userId)) {
+        if (message.getMessageUserId().equals(currentUser.getUserId())) {
             return MY_TEXT_MESSAGE;
         }
         return THEIR_TEXT_MESSAGE;
@@ -51,6 +53,8 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
+        Log.d("bind:", ((Integer) position).toString());
+
         switch (viewHolder.getItemViewType()) {
             case MY_TEXT_MESSAGE:
                 SentMessageViewHolder holder1 = (SentMessageViewHolder) viewHolder;
@@ -80,15 +84,15 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureMyTextMessageViewHolder(SentMessageViewHolder viewHolder, int position) {
         Message message = messageList.get(position);
         viewHolder.text.setText(message.getMessageText());
-        viewHolder.time.setText(DateFormat.format("dd MMM  (h:mm a)", message.getMessageTime()));
+        viewHolder.time.setText(DateFormat.format("dd MMM h:mm a", message.getMessageTime()));
     }
 
     private void configureTheirTextMessageViewHolder(ReceivedMessageViewHolder viewHolder, int position) {
         Message message = messageList.get(position);
         viewHolder.username.setText(message.getMessageUsername());
-        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile);
+//        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile);
         viewHolder.text.setText(message.getMessageText());
-        viewHolder.time.setText(DateFormat.format("dd MMM  (h:mm a)", message.getMessageTime()));
+        viewHolder.time.setText(DateFormat.format("dd MMM h:mm a", message.getMessageTime()));
     }
 
 }

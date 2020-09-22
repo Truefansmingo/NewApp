@@ -10,19 +10,22 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.databinding.FragmentChatRoomBinding;
 import com.flagcamp.secondhands.model.ChatRoom;
 import com.flagcamp.secondhands.model.User;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ public class ChatRoomFragment extends Fragment implements ChatFragmentAdapter.Ch
 
     List<ChatRoom> chatRoomList = new ArrayList<>();
     private ChatFragmentAdapter chatFragmentAdapter;
-    private FirebaseDatabase database;
+    private FirebaseFirestore database;
     private FragmentChatRoomBinding binding;
 
 
@@ -51,32 +54,36 @@ public class ChatRoomFragment extends Fragment implements ChatFragmentAdapter.Ch
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        database = FirebaseDatabase.getInstance();
+        database = FirebaseFirestore.getInstance();
         CurrentUserSingleton currentUser = CurrentUserSingleton.getInstance();
 
-        DatabaseReference friendshipRef = database.getReference("chatRooms/friendship/" + currentUser.getUserId());
-        friendshipRef.addValueEventListener(new ValueEventListener() {
+        CollectionReference friendshipRef = database.collection("chatRooms").document("friendship").collection(currentUser.getUserId());
+        friendshipRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                chatRoomList.clear();
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
-                    ChatRoom chatRoom = new ChatRoom();
-                    chatRoom.setSenderId(child.child("senderId").getValue().toString());
-                    chatRoom.setSenderName(child.child("senderName").getValue().toString());
-                    chatRoomList.add(chatRoom);
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    QuerySnapshot query = task.getResult();
+                    if (!query.isEmpty()) {
+                        for (DocumentSnapshot doc: query.getDocuments()) {
+                            Log.d("Document", doc.getData().toString());
+
+                            ChatRoom chatRoom = new ChatRoom();
+                            chatRoom.setSenderId(doc.get("senderId").toString());
+                            chatRoom.setSenderName(doc.get("senderName").toString());
+                            chatRoomList.add(chatRoom);
+                        }
+                        chatFragmentAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.d("Test", "The read failed");
+                    }
                 }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
             }
         });
 
-        binding.fragmentChatRoomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         chatFragmentAdapter = new ChatFragmentAdapter(chatRoomList, ChatRoomFragment.this);
         binding.fragmentChatRoomRecyclerView.setAdapter(chatFragmentAdapter);
-        chatFragmentAdapter.notifyDataSetChanged();
+
+        binding.fragmentChatRoomRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 
     @Override
