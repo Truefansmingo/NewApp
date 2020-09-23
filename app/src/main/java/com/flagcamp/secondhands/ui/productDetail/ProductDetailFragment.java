@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import com.flagcamp.secondhands.databinding.FragmentProductDetailBinding;
 import com.flagcamp.secondhands.databinding.FragmentSearchBinding;
 import com.flagcamp.secondhands.model.Image;
 import com.flagcamp.secondhands.model.Product;
+import com.flagcamp.secondhands.model.User;
 import com.flagcamp.secondhands.repository.ProductRespository;
 import com.flagcamp.secondhands.repository.ProductViewModelFactory;
 import com.flagcamp.secondhands.ui.search.SearchFragment;
@@ -74,6 +76,17 @@ public class ProductDetailFragment extends Fragment {
         }else{
             binding.productDetailFavorite.setImageResource(R.drawable.ic_favorite_border_24dp);
         }
+
+        //binding.productDetailChatButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_detail_to_navigation_profile, null));
+        binding.productDetailChatButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                String url = "https://firebasestorage.googleapis.com/v0/b/androidsecondhandmarket.appspot.com/o/testImgs_v1%2FTrump1.jpg?alt=media&token=a7da5dad-2354-4979-b155-75fb1e9e845d";
+                User user = new User("0", "Rick Sun", url, "email", "5.0");
+                ProductDetailFragmentDirections.ActionNavigationDetailToNavigationProfile action = ProductDetailFragmentDirections.actionNavigationDetailToNavigationProfile(user);
+                Navigation.findNavController(view).navigate(action);
+
+            }
+        });
         binding.productDetailPriceView.setText(product.price);
         binding.productDetailDescriptionView.setText(product.description);
         binding.productDetailSellerView.setText(product.seller);

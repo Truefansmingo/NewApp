@@ -14,25 +14,32 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_detail"
             app:destination="@id/navigation_detail" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_map"
+            app:destination="@id/navigation_map" />
     </fragment>
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_search"
         android:name="com.flagcamp.secondhands.ui.search.SearchFragment"
         android:label="@string/app_search"
         tools:layout="@layout/fragment_search" />
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_post"
         android:name="com.flagcamp.secondhands.ui.post.PostFragment"
         android:label="@string/app_post"
         tools:layout="@layout/fragment_post" />
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_profile"
         android:name="com.flagcamp.secondhands.ui.profile.ProfileFragment"
         android:label="@string/app_profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <argument
+            android:name="user"
+            app:argType="com.flagcamp.secondhands.model.User"/>
+    </fragment>
 
-    <keep_state_fragment
+    <fragment
         android:id="@+id/navigation_fav"
         android:name="com.flagcamp.secondhands.ui.fav.FavFragment"
         android:label="@string/app_fav"
@@ -46,5 +53,14 @@
         <argument
             android:name="product"
             app:argType="com.flagcamp.secondhands.model.Product"/>
+        <action
+            android:id="@+id/action_navigation_detail_to_navigation_profile"
+            app:destination="@id/navigation_profile" />
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.flagcamp.secondhands.ui.map.MapFragment"
+        android:label="@string/app_map"
+        tools:layout="@layout/fragment_map">
     </fragment>
 </navigation>

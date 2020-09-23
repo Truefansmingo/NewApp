@@ -4,10 +4,12 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 
@@ -23,7 +25,7 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
     interface ItemCallback {
         void onOpenDetails(Product product);
     }
-    private ItemCallback itemCallback;
+    public ItemCallback itemCallback;
 
     public void setItemCallback(ItemCallback itemCallback) {
         this.itemCallback = itemCallback;
@@ -97,5 +99,6 @@ public class HomeProductAdapter extends RecyclerView.Adapter<HomeProductAdapter.
             itemTitleTextView = binding.homeItemTitle;
             itemPriceView = binding.homeItemPrice;
         }
+
     }
 }

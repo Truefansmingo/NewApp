@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -79,6 +80,14 @@ public class HomeFragment extends Fragment {
         binding.homePageRecommendationHealth.setText("Health");
         binding.homePageRecommendationHousehold.setText("Household");
         binding.homePageRecommendationTitle.setText("You Might Like These Products");
+        binding.mapButton.setImageResource(R.drawable.baseline_explore_black_18dp);
+//        binding.mapButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_home_to_navigation_map, null));
+        binding.mapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_navigation_map);
+            }
+        });
         for(int i = 0; i < CATEGORIES; i++){
             productAdapters[i] = new HomeProductAdapter();
             layoutManagers[i] = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
@@ -90,6 +99,11 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onOpenDetails(Product product) {
                     // TODO
+                    /*
+                    HomeFragmentDirections.ActionNavigationHomeToNavigationDetail direction = HomeFragmentDirections.actionNavigationHomeToNavigationDetail(product);
+                    NavHostFragment.findNavController(HomeFragment.this).navigate(direction);
+
+                    */
                     HomeFragmentDirections.ActionNavigationHomeToNavigationDetail direction = HomeFragmentDirections.actionNavigationHomeToNavigationDetail(product);
                     NavHostFragment.findNavController(HomeFragment.this).navigate(direction);
 
