@@ -43,7 +43,6 @@ public class ChatRoomFragment extends Fragment implements ChatFragmentAdapter.Ch
         // Required empty public constructor
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,9 +66,7 @@ public class ChatRoomFragment extends Fragment implements ChatFragmentAdapter.Ch
                         for (DocumentSnapshot doc: query.getDocuments()) {
                             Log.d("Document", doc.getData().toString());
 
-                            ChatRoom chatRoom = new ChatRoom();
-                            chatRoom.setSenderId(doc.get("senderId").toString());
-                            chatRoom.setSenderName(doc.get("senderName").toString());
+                            ChatRoom chatRoom = new ChatRoom(doc.get("senderId").toString(), doc.get("senderName").toString());
                             chatRoomList.add(chatRoom);
                         }
                         chatFragmentAdapter.notifyDataSetChanged();

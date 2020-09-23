@@ -1,21 +1,16 @@
 package com.flagcamp.secondhands.ui.chat;
 
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flagcamp.secondhands.R;
-import com.flagcamp.secondhands.databinding.ItemChatBinding;
+import com.flagcamp.secondhands.databinding.ChatItemBinding;
 import com.flagcamp.secondhands.model.ChatRoom;
 import com.flagcamp.secondhands.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +30,7 @@ public class ChatFragmentAdapter extends RecyclerView.Adapter<ChatFragmentAdapte
     @NonNull
     @Override
     public ChatFragmentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_chat, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_item, parent, false);
         ViewHolder viewHolder = new ChatFragmentAdapter.ViewHolder(view);
 
         Log.d("test", "create " + viewHolder.toString());
@@ -68,7 +63,7 @@ public class ChatFragmentAdapter extends RecyclerView.Adapter<ChatFragmentAdapte
 
         ViewHolder(View itemView) {
             super(itemView);
-            ItemChatBinding binding = ItemChatBinding.bind(itemView);
+            ChatItemBinding binding = ChatItemBinding.bind(itemView);
             senderName = binding.itemChatText;
             chatButton = binding.itemChatButton;
         }

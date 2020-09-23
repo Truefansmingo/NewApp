@@ -56,7 +56,7 @@
                 android:src="@drawable/ic_email_24" />
 
             <TextView
-                android:layout_width="40dp"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"
@@ -83,7 +83,7 @@
                 android:src="@drawable/ic_star_24" />
 
             <TextView
-                android:layout_width="40dp"
+                android:layout_width="42dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="4dp"

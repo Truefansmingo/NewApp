@@ -1,28 +1,17 @@
 package com.flagcamp.secondhands.ui.chat;
 
-import android.content.Context;
-import android.text.Layout;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.R;
-import com.flagcamp.secondhands.model.ChatRoom;
 import com.flagcamp.secondhands.model.Message;
-import com.flagcamp.secondhands.model.User;
-
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -72,10 +61,10 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RecyclerView.ViewHolder viewHolder;
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         if (viewType == MY_TEXT_MESSAGE) {
-            View view = inflater.inflate(R.layout.item_message_sent, parent, false);
+            View view = inflater.inflate(R.layout.message_sent_item, parent, false);
             viewHolder = new SentMessageViewHolder(view);
         } else {
-            View view = inflater.inflate(R.layout.item_message_received, parent, false);
+            View view = inflater.inflate(R.layout.message_received_item, parent, false);
             viewHolder = new ReceivedMessageViewHolder(view);
         }
         return viewHolder;

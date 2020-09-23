@@ -85,6 +85,8 @@ public class MessageListFragment extends Fragment{
 
                 binding.chatboxEdittext.setText("");
                 hideKeyboard(getContext(), view);
+
+
             }
         });
     }
@@ -108,7 +110,11 @@ public class MessageListFragment extends Fragment{
                     messageAdapter.notifyDataSetChanged();
                     binding.messageListRecyclerview.smoothScrollToPosition(messageList.size() - 1);
                 } else {
-                    Log.d("Test:", error.getMessage());
+                    if (error == null) {
+                        Log.d("Message Render", "Empty message list");
+                    } else {
+                        Log.d("Message Render:", error.getMessage());
+                    }
                 }
             }
         });

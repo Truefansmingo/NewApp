@@ -1,66 +1,121 @@
+/*
+I have problem with encapsulate the rendering code.
+So if you want to use my rendering code to save time, the easiest way for now is to copy some codes,
+OR YOU CAN TRY TO TEACH ME HOW TO ENCAPSULATE THEM.
+
+Since I have so many views on homepage, I use [] to store adapters and managers.
+I use StaggeredGridLayout to make a recyclerView HORIZONTALLY scrollable, change it to your own layout. eg LinearLayout
+ */
 package com.flagcamp.secondhands.ui.home;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.flagcamp.secondhands.R;
+import com.flagcamp.secondhands.databinding.FragmentHomeBinding;
+import com.flagcamp.secondhands.model.Product;
+import com.flagcamp.secondhands.repository.ProductRepository;
+import com.flagcamp.secondhands.repository.ProductViewModelFactory;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
+    private static int CATEGORIES = 7;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private HomeViewModel viewModel;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private FragmentHomeBinding binding;
 
-    public HomeFragment() {
-        // Required empty public constructor
-    }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment HomeFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public HomeFragment(){
+        // required empty constructor
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+
+        return binding.getRoot();
     }
+
+    @SuppressLint("SetTextI18n")
+    @Override
+    public void onViewCreated(@NonNull View view, @NonNull Bundle savedInstanceState){
+        super.onViewCreated(view, savedInstanceState);
+        HomeProductAdapter[] productAdapters = new HomeProductAdapter[CATEGORIES];
+        StaggeredGridLayoutManager[] layoutManagers = new StaggeredGridLayoutManager[CATEGORIES];
+        RecyclerView[] recyclerViews = new RecyclerView[CATEGORIES];
+        recyclerViews[0] = binding.productsResultsRecyclerView0;
+        recyclerViews[1] = binding.productsResultsRecyclerView1;
+        recyclerViews[2] = binding.productsResultsRecyclerView2;
+        recyclerViews[3] = binding.productsResultsRecyclerView3;
+        recyclerViews[4] = binding.productsResultsRecyclerView4;
+        recyclerViews[5] = binding.productsResultsRecyclerView5;
+        recyclerViews[6] = binding.productsResultsRecyclerView6;
+        binding.homePageRecommendationBaby.setText("Baby & Kids");
+        binding.homePageRecommendationCar.setText("Car");
+        binding.homePageRecommendationClothing.setText("Clothing");
+        binding.homePageRecommendationElectronic.setText("Electronics");
+        binding.homePageRecommendationFurniture.setText("Furniture");
+        binding.homePageRecommendationHealth.setText("Health");
+        binding.homePageRecommendationHousehold.setText("Household");
+        binding.homePageRecommendationTitle.setText("You Might Like These Products");
+        binding.mapButton.setImageResource(R.drawable.baseline_explore_black_18dp);
+//        binding.mapButton.setOnClickListener(Navigation.createNavigateOnClickListener(R.id.action_navigation_home_to_navigation_map, null));
+        binding.mapButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_navigation_map);
+            }
+        });
+        for(int i = 0; i < CATEGORIES; i++){
+            productAdapters[i] = new HomeProductAdapter();
+            layoutManagers[i] = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL);
+            recyclerViews[i].setAdapter(productAdapters[i]);
+            recyclerViews[i].setLayoutManager(layoutManagers[i]);
+        }
+        for(int i = 0; i < CATEGORIES; i++){
+            productAdapters[i].setItemCallback(new HomeProductAdapter.ItemCallback() {
+                @Override
+                public void onOpenDetails(Product product) {
+                    // TODO
+                    /*
+                    HomeFragmentDirections.ActionNavigationHomeToNavigationDetail direction = HomeFragmentDirections.actionNavigationHomeToNavigationDetail(product);
+                    NavHostFragment.findNavController(HomeFragment.this).navigate(direction);
+
+                    */
+                    HomeFragmentDirections.ActionNavigationHomeToNavigationDetail direction = HomeFragmentDirections.actionNavigationHomeToNavigationDetail(product);
+                    NavHostFragment.findNavController(HomeFragment.this).navigate(direction);
+
+                }
+
+            });
+        }
+
+        ProductRepository repository = new ProductRepository();
+        viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(HomeViewModel.class);
+        viewModel.setSearchInput("q");
+        viewModel.getProducts().observe(getViewLifecycleOwner(),productResponse -> {
+            if(productResponse != null){
+                for(int i = 0; i < CATEGORIES; i++){
+                    productAdapters[i].setProducts(productResponse.getCat(i));
+                }
+            }
+
+
+        });
+
+    }
+
 }

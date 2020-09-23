@@ -1,36 +1,39 @@
+/*
+This class is the product model including all the fields we need.
+basic methods including constructer(), toString(), equals(), and hashCode() are already generated.
+TODO(NOT NECESSARY): 1. change location field and category field to enum.
+                    2. replace constructer with a builder
+ */
+
 package com.flagcamp.secondhands.model;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Product {
+public class Product implements Serializable {
     public String seller; // 搜索到自己post的商品
     public String description;
-
     public String location; // State: NJ CA NY
     public double lat;
     public double lon;
-
     public String postedAt; // (TBD)
     public String title;
     public String price;
     public final String id;
-
     public boolean status; // true for available, false for sold out
-
     public String urlToImageFolder;
     public List<String> urlToImage;
-
     public boolean favorite;
-    public Enum category; //TBD
+    public String category; //TBD
 
-    public Product(String seller, String description, String postedAt, String title, String price, String urlToImageFolder, String urlToImage, String id, boolean favorite) {
+    public Product(String seller, String description, String postedAt, String title, String price, List<String> urlToImage, String id, boolean favorite) {
         this.seller = seller;
         this.description = description;
         this.postedAt = postedAt;
         this.title = title;
         this.price = price;
-        this.urlToImageFolder = urlToImageFolder;
+        this.urlToImage = urlToImage;
         this.id = id;
         this.favorite = favorite;
     }
@@ -63,3 +66,8 @@ public class Product {
         return Objects.hash(seller, description, postedAt, title, price);
     }
 }
+
+/*
+
+
+ */
