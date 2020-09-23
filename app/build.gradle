@@ -62,16 +62,18 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
-    implementation 'com.google.firebase:firebase-core:17.5.0'       //Analytics
-    implementation 'com.google.firebase:firebase-auth:19.4.0'       //Authentication
+    implementation 'com.google.firebase:firebase-core:17.5.0'       // Analytics
+    implementation 'com.google.firebase:firebase-auth:19.4.0'       // Authentication
     implementation 'com.firebaseui:firebase-ui-database:1.0.0'
     implementation "com.firebaseui:firebase-ui-firestore:3.0.0"
     implementation 'com.google.firebase:firebase-analytics:17.5.0'
-    implementation 'com.google.firebase:firebase-firestore:21.6.0'  //Cloud Firestore
-    implementation 'com.google.firebase:firebase-storage:19.2.0'    //Storage
-    implementation 'com.google.firebase:firebase-database:19.4.0'   //Database
+    implementation 'com.google.firebase:firebase-firestore:21.6.0'  // Cloud Firestore
+    implementation 'com.google.firebase:firebase-database:19.4.0'   // Database
 
-    implementation 'com.google.android.gms:play-services-auth:18.1.0'
+    implementation 'com.google.android.gms:play-services-auth:18.1.0' // Login
+
+    implementation 'com.google.firebase:firebase-messaging:20.2.4' // Notification
+    implementation 'com.google.firebase:firebase-analytics:17.5.0' // Notification
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
@@ -19,14 +20,8 @@ import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.databinding.FragmentMessageListBinding;
 import com.flagcamp.secondhands.model.Message;
 import com.flagcamp.secondhands.model.User;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.flagcamp.secondhands.notification.NotificationRepository;
+import com.flagcamp.secondhands.notification.ViewModelFactory;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -35,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.core.OrderBy;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,11 +45,10 @@ public class MessageListFragment extends Fragment{
     private FirebaseFirestore database;
     private CollectionReference chatRoomRef;
     private CurrentUserSingleton currentUser;
+    private MessageListViewModel viewModel;
 
     public MessageListFragment() {
         // Required empty public constructor
-        currentUser = CurrentUserSingleton.getInstance();
-        database = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -67,6 +61,10 @@ public class MessageListFragment extends Fragment{
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        currentUser = CurrentUserSingleton.getInstance();
+        database = FirebaseFirestore.getInstance();
+        NotificationRepository repository = new NotificationRepository(requireContext());
+        viewModel = new ViewModelProvider(this, new ViewModelFactory(repository)).get(MessageListViewModel.class);
         chatRoomRef = database.collection("chatRooms/chatRoom/" + getChatRoomName());
 
         updateMessageList();
@@ -82,11 +80,16 @@ public class MessageListFragment extends Fragment{
                         currentUser.getPhotoUrl(),
                         new Date().getTime());
                 chatRoomRef.add(message);
-
                 binding.chatboxEdittext.setText("");
                 hideKeyboard(getContext(), view);
+
+                // send notification
+                String token = FirebaseInstanceId.getInstance().getToken();
+                viewModel.sendNotifications(token, message);
             }
         });
+
+        viewModel.updateToken();
     }
 
     private void updateMessageList() {
@@ -123,7 +126,7 @@ public class MessageListFragment extends Fragment{
         return chatRoomName;
     }
 
-    public void hideKeyboard(Context context, View view) {
+    private void hideKeyboard(Context context, View view) {
         InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

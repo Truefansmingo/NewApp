@@ -1,7 +1,5 @@
 package com.flagcamp.secondhands.model;
 
-import java.util.Date;
-
 public class Message {
 
     private String messageUsername;
@@ -15,7 +13,6 @@ public class Message {
         this.messageText = messageText;
         this.messageUserId = messageUserId;
         this.messageTime = messageTime;
-//        this.messageTime = new Date().getTime();
         this.messagePhotoUrl = messagePhotoUrl;
     }
 
