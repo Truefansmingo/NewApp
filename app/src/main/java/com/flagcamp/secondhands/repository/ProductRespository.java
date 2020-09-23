@@ -14,21 +14,63 @@ if we decide to use same repository like this, I believe you can either build yo
  */
 package com.flagcamp.secondhands.repository;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.model.ProductResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Headers;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
+
 public class ProductRespository {
+    private final OkHttpClient client = new OkHttpClient();
     public LiveData<ProductResponse> getProducts(String query){
         MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
+
+        /*
+        Request request = new Request.Builder()
+                .url("http://zarathos-env.eba-ccwytkkn.us-east-2.elasticbeanstalk.com/posts")
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override public void onResponse(Call call, Response response) throws IOException {
+                try (ResponseBody responseBody = response.body()) {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+                    Headers responseHeaders = response.headers();
+                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    }
+                    Log.d(responseBody.string(),"worked");
+                    System.out.println(responseBody.string());
+                }
+            }
+        });
+
+         */
+
+
+
+
         everyThingLiveData.setValue(generateDummyProductDataForHomePage());
         return everyThingLiveData;
     }
+
     public ProductResponse generateDummyProductDataForHomePage(){
         List<List<Product>> tempCategories = new ArrayList<>();
         for(int i = 0; i < 7; i++){
@@ -60,6 +102,7 @@ public class ProductRespository {
             tempCategories.get(i / 10).add(temp);
             products.add(temp);
         }
+
         return new ProductResponse(products,tempCategories.get(0), tempCategories.get(1), tempCategories.get(2), tempCategories.get(3), tempCategories.get(4), tempCategories.get(5), tempCategories.get(6));
     }
 }

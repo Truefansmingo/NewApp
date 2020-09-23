@@ -3,6 +3,7 @@ package com.flagcamp.secondhands;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.flagcamp.secondhands.navigation.KeepStateNavigator;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -25,7 +27,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 public class MainActivity extends AppCompatActivity {
-    ImageButton homePageImageButton;
+
 
     private NavController navController;
     @Override
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
+        Navigator navigator =
+                new KeepStateNavigator(this, navHostFragment.getChildFragmentManager(), R.id.nav_host_fragment);
+        navController.getNavigatorProvider().addNavigator(navigator);
+
+        navController.setGraph(R.navigation.nav_graph);
+
         NavigationUI.setupWithNavController(navView, navController);
         NavigationUI.setupActionBarWithNavController(this, navController);
     }
@@ -46,21 +54,6 @@ public class MainActivity extends AppCompatActivity {
         return navController.navigateUp();
     }
 
-    public void addListenerOnButton() {
-
-        homePageImageButton = (ImageButton) findViewById(R.id.home_item_iamge);
-
-        homePageImageButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View arg0) {
-
-                Toast.makeText(MainActivity.this,
-                        "ImageButton is clicked!", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-    }
 }
 
 
