@@ -49,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
             currentUser.setUserName(user.getDisplayName());
             currentUser.setEmail(user.getEmail());
             currentUser.setPhotoUrl(user.getPhotoUrl().toString());
+//            currentUser.setRating(); // get rating score from backend
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
