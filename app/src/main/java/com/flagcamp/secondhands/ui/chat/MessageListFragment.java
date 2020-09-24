@@ -85,8 +85,6 @@ public class MessageListFragment extends Fragment{
 
                 binding.chatboxEdittext.setText("");
                 hideKeyboard(getContext(), view);
-
-
             }
         });
     }

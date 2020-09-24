@@ -63,6 +63,7 @@ public class ChatRoomFragment extends Fragment implements ChatFragmentAdapter.Ch
                 if (task.isSuccessful()) {
                     QuerySnapshot query = task.getResult();
                     if (!query.isEmpty()) {
+                        chatRoomList.clear();
                         for (DocumentSnapshot doc: query.getDocuments()) {
                             Log.d("Document", doc.getData().toString());
 

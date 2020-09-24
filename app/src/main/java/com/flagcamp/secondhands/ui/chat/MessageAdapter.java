@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.R;
 import com.flagcamp.secondhands.model.Message;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureTheirTextMessageViewHolder(ReceivedMessageViewHolder viewHolder, int position) {
         Message message = messageList.get(position);
         viewHolder.username.setText(message.getMessageUsername());
-//        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile);
+//        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile); // messagePhotoUrl of test data is null
         viewHolder.text.setText(message.getMessageText());
         viewHolder.time.setText(DateFormat.format("dd MMM h:mm a", message.getMessageTime()));
     }

@@ -38,6 +38,23 @@ public class Product implements Serializable {
         this.favorite = favorite;
     }
 
+    public Product(String seller, String description, String location, double lat, double lon, String title, String price) {
+        this.seller = seller;
+        this.description = description;
+        this.location = location;
+        this.lat = lat;
+        this.lon = lon;
+        postedAt = "09082020";
+        this.title = title;
+        this.price = price;
+        id = "234";
+        status = true;
+        urlToImageFolder = null;
+        urlToImage = null;
+        favorite = true;
+        category = "TBD";
+    }
+
     @Override
     public String toString() {
         return "Product{" +

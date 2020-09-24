@@ -14,9 +14,13 @@ if we decide to use same repository like this, I believe you can either build yo
  */
 package com.flagcamp.secondhands.repository;
 
+import android.content.Context;
+import android.os.AsyncTask;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.flagcamp.secondhands.model.DummyData;
 import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.model.ProductResponse;
 
@@ -27,37 +31,32 @@ import okhttp3.OkHttpClient;
 
 public class ProductRepository {
     private final OkHttpClient client = new OkHttpClient();
+    private final DummyData data;
+    private AsyncTask asyncTask;
+
+    public ProductRepository(){
+        data = new DummyData();
+    }
+
+    public LiveData<List<Product>> getFavProductList(int id){
+        List<Product> list = data.getFavProducts(id);
+        MutableLiveData<List<Product>> res = new MutableLiveData<>();
+        res.setValue(list);
+        return  res;
+    }
+    public void deleteFavProduct(int id, Product product){
+        data.deleteFav(id,product);
+//        AsyncTask.execute(
+//                ()->data.deleteFav(id,product));
+    }
+    public void onCancel() {
+        if(asyncTask != null) {
+            asyncTask.cancel(true);
+        }
+    }
+
     public LiveData<ProductResponse> getProducts(String query){
         MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
-
-        /*
-        Request request = new Request.Builder()
-                .url("http://zarathos-env.eba-ccwytkkn.us-east-2.elasticbeanstalk.com/posts")
-                .build();
-        client.newCall(request).enqueue(new Callback() {
-            @Override public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override public void onResponse(Call call, Response response) throws IOException {
-                try (ResponseBody responseBody = response.body()) {
-                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
-                    Log.d(responseBody.string(),"worked");
-                    System.out.println(responseBody.string());
-                }
-            }
-        });
-
-         */
-
-
-
-
         everyThingLiveData.setValue(generateDummyProductDataForHomePage());
         return everyThingLiveData;
     }
