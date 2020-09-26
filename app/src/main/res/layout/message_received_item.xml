@@ -14,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginLeft="8dp"
-        android:background="@drawable/circle"/>
+        android:background="@drawable/circle"
+        android:src="@drawable/profile_photo_test"/>
 
     <TextView
         android:id="@+id/message_name_text"

@@ -99,7 +99,7 @@ public class ProductDetailFragment extends Fragment {
 
 
 
-        ProductRepository repository = new ProductRepository();
+        ProductRepository repository = new ProductRepository(requireContext());
         viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(ProductDetailViewModel.class);
         viewModel.setSearchInput("us");
         viewModel.getProducts().observe(getViewLifecycleOwner(),productResponse -> {

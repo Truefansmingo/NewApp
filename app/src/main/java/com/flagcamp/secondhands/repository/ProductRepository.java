@@ -23,19 +23,28 @@ import androidx.lifecycle.MutableLiveData;
 import com.flagcamp.secondhands.model.DummyData;
 import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.model.ProductResponse;
+import com.flagcamp.secondhands.model.SearchResponse;
+import com.flagcamp.secondhands.network.Api;
+import com.flagcamp.secondhands.network.RetrofitClient;
+import com.flagcamp.secondhands.ui.search.SearchViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ProductRepository {
     private final OkHttpClient client = new OkHttpClient();
     private final DummyData data;
     private AsyncTask asyncTask;
+    private final Api api;
 
-    public ProductRepository(){
+    public ProductRepository(Context context){
         data = new DummyData();
+        api = RetrofitClient.newInstance(context).create(Api.class);
     }
 
     public LiveData<List<Product>> getFavProductList(int id){
@@ -46,8 +55,6 @@ public class ProductRepository {
     }
     public void deleteFavProduct(int id, Product product){
         data.deleteFav(id,product);
-//        AsyncTask.execute(
-//                ()->data.deleteFav(id,product));
     }
     public void onCancel() {
         if(asyncTask != null) {
@@ -58,6 +65,34 @@ public class ProductRepository {
     public LiveData<ProductResponse> getProducts(String query){
         MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
         everyThingLiveData.setValue(generateDummyProductDataForHomePage());
+        return everyThingLiveData;
+    }
+
+//    // Test search feature with dummy data
+//    public LiveData<ProductResponse> searchProducts(SearchViewModel.Cell cell){
+//        MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
+//        everyThingLiveData.setValue(generateDummyProductDataForHomePage());
+//        return everyThingLiveData;
+//    }
+
+    public LiveData<SearchResponse> searchProducts(SearchViewModel.Cell cell){
+        MutableLiveData<SearchResponse> everyThingLiveData = new MutableLiveData<>();
+        api.search(cell.searchInput, cell.categoryInput, cell.locationInput)
+                .enqueue(new Callback<SearchResponse>() {
+                    @Override
+                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                        if (response.isSuccessful()) {
+                            everyThingLiveData.setValue(response.body());
+                        } else {
+                            everyThingLiveData.setValue(null);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+                        everyThingLiveData.setValue(null);
+                    }
+                });
         return everyThingLiveData;
     }
 
@@ -83,12 +118,13 @@ public class ProductRepository {
         urlToImage2.add(img6);
 
         for(int i = 0; i < 70; i++){
-            Product temp;
+            List<String> urlToImage;
             if(i % 2 == 0){
-                temp = new Product("seller: " + i, "description: " + i, "postedAt: " + i, "title: " + i, "price: " + i, urlToImage1, ""+i, false);
+                urlToImage = urlToImage1;
             }else{
-                temp = new Product("seller: " + i, "description: " + i, "postedAt: " + i, "title: " + i, "price: " + i, urlToImage2, ""+i, false);
+                urlToImage = urlToImage2;
             }
+            Product temp = new Product("seller: " + i, "description: " + i, "postedAt: " + i, "title: " + i, "price: " + i, urlToImage, ""+i, false, "location: " + i);
             tempCategories.get(i / 10).add(temp);
             products.add(temp);
         }

@@ -49,7 +49,6 @@ public class ProfileFragment extends Fragment {
         if (currentUser != null) {
             binding.profileNameTextView.setText(currentUser.getUserName());
             Picasso.get().load(currentUser.getPhotoUrl()).into(binding.profilePhotoImageView);
-            binding.profileUserIdTextView.setText(currentUser.getUserId());
             binding.profileEmailTextView.setText(currentUser.getEmail());
             binding.profileRatingScoreTextView.setText(currentUser.getRating());
 

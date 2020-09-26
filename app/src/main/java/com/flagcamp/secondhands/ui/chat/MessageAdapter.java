@@ -80,7 +80,7 @@ public class MessageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void configureTheirTextMessageViewHolder(ReceivedMessageViewHolder viewHolder, int position) {
         Message message = messageList.get(position);
         viewHolder.username.setText(message.getMessageUsername());
-//        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile); // messagePhotoUrl of test data is null
+        Picasso.get().load(message.getMessagePhotoUrl()).into(viewHolder.imgProfile);
         viewHolder.text.setText(message.getMessageText());
         viewHolder.time.setText(DateFormat.format("dd MMM h:mm a", message.getMessageTime()));
     }

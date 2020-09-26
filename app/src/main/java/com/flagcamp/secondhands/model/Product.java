@@ -26,8 +26,9 @@ public class Product implements Serializable {
     public List<String> urlToImage;
     public boolean favorite;
     public String category; //TBD
+    public String rating;
 
-    public Product(String seller, String description, String postedAt, String title, String price, List<String> urlToImage, String id, boolean favorite) {
+    public Product(String seller, String description, String postedAt, String title, String price, List<String> urlToImage, String id, boolean favorite, String location) {
         this.seller = seller;
         this.description = description;
         this.postedAt = postedAt;
@@ -36,6 +37,7 @@ public class Product implements Serializable {
         this.urlToImage = urlToImage;
         this.id = id;
         this.favorite = favorite;
+        this.location = location;
     }
 
     public Product(String seller, String description, String location, double lat, double lon, String title, String price) {

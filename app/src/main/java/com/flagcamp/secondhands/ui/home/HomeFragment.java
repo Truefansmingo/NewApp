@@ -103,7 +103,7 @@ public class HomeFragment extends Fragment {
             });
         }
 
-        ProductRepository repository = new ProductRepository();
+        ProductRepository repository = new ProductRepository(requireContext());
         viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(HomeViewModel.class);
         viewModel.setSearchInput("q");
         viewModel.getProducts().observe(getViewLifecycleOwner(),productResponse -> {

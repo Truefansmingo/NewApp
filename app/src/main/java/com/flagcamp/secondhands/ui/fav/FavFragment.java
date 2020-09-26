@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.flagcamp.secondhands.model.DummyData;
 import com.flagcamp.secondhands.model.Product;
@@ -37,7 +38,6 @@ public class FavFragment extends Fragment {
     public FavFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -71,7 +71,7 @@ public class FavFragment extends Fragment {
         binding.favListsRecyclerView.setAdapter(favProductAdapter);
         binding.favListsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        ProductRepository repository = new ProductRepository();
+        ProductRepository repository = new ProductRepository(requireContext());
         viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(FavViewModel.class);
         viewModel
                 .getFavProductList(id)  //return variable is favProducts
@@ -82,10 +82,9 @@ public class FavFragment extends Fragment {
                                 Log.d(tag, favProducts.toString());
                                 favProductAdapter.updateFavList(favProducts);
                             }else {
-                                Log.d(tag, "please add your first favoriabled produts");
+                                Toast.makeText(getContext(), "Please favorite your products", Toast.LENGTH_SHORT).show();
                             }
                         });
-
     }
 
 //    @Override
