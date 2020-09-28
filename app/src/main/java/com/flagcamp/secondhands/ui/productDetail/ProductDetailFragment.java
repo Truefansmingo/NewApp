@@ -13,19 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.flagcamp.secondhands.CurrentUserSingleton;
 import com.flagcamp.secondhands.R;
 import com.flagcamp.secondhands.databinding.FragmentProductDetailBinding;
+import com.flagcamp.secondhands.model.ChatRoom;
 import com.flagcamp.secondhands.model.Image;
 import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.model.User;
 import com.flagcamp.secondhands.repository.ProductRepository;
 import com.flagcamp.secondhands.repository.ProductViewModelFactory;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ProductDetailFragment extends Fragment {
+    private FirebaseFirestore database;
     private static int CATAGORIES = 5;
 
     private FragmentProductDetailBinding binding;
@@ -73,8 +78,9 @@ public class ProductDetailFragment extends Fragment {
         binding.productDetailChatButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String url = "https://firebasestorage.googleapis.com/v0/b/androidsecondhandmarket.appspot.com/o/testImgs_v1%2FTrump1.jpg?alt=media&token=a7da5dad-2354-4979-b155-75fb1e9e845d";
-                User user = new User("0", "Rick Sun", url, "email", "5.0");
-                ProductDetailFragmentDirections.ActionNavigationDetailToNavigationVisitorViewProfile action = ProductDetailFragmentDirections.actionNavigationDetailToNavigationVisitorViewProfile(user);
+                User user = new User("0", "Rick Sun", url, "email", "5.0"); // TODO: fetch user data
+                addFriendship(user);
+                ProductDetailFragmentDirections.ActionNavigationDetailToNavigationMessage action = ProductDetailFragmentDirections.actionNavigationDetailToNavigationMessage(user);
                 Navigation.findNavController(view).navigate(action);
 
             }
@@ -113,6 +119,16 @@ public class ProductDetailFragment extends Fragment {
 
 
 
+    }
+
+    private void addFriendship(User user) {
+        database = FirebaseFirestore.getInstance();
+        CurrentUserSingleton currentUser = CurrentUserSingleton.getInstance();
+        DocumentReference friendshipRef = database.collection("chatRooms").document("friendship");
+        ChatRoom chatRoom1 = new ChatRoom(user.userId, user.name);
+        ChatRoom chatRoom2 = new ChatRoom(currentUser.getUserId(), currentUser.getUserName());
+        friendshipRef.collection(currentUser.getUserId()).document(user.userId).set(chatRoom1);
+        friendshipRef.collection(user.userId).document(currentUser.getUserId()).set(chatRoom2);
     }
 
 }

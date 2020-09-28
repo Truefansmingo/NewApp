@@ -27,7 +27,7 @@
         <item>Beauty &amp; health</item>
         <item>Cars</item>
         <item>Household</item>
-        <item>electronics</item>
+        <item>Electronics</item>
     </string-array>
     <string-array name="location">
         <item>All States</item><item>AL</item><item>AK</item><item>AZ</item><item>AR</item><item>CA</item><item>CO</item><item>CT</item><item>DE</item><item>FL</item>

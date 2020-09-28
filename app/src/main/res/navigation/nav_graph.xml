@@ -101,8 +101,8 @@
             android:name="product"
             app:argType="com.flagcamp.secondhands.model.Product"/>
         <action
-            android:id="@+id/action_navigation_detail_to_navigation_visitor_view_profile"
-            app:destination="@id/navigation_visitor_view_profile" />
+            android:id="@+id/action_navigation_detail_to_navigation_message"
+            app:destination="@id/navigation_message" />
     </fragment>
     <fragment
         android:id="@+id/navigation_map"
