@@ -8,6 +8,7 @@ TODO(NOT NECESSARY): 1. change location field and category field to enum.
 package com.flagcamp.secondhands.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -17,21 +18,21 @@ public class Product implements Serializable {
     public String location; // State: NJ CA NY
     public double lat;
     public double lon;
-    public String postedAt; // (TBD)
+    public long postedAt; // (TBD)
     public String title;
     public String price;
     public final String id;
-    public boolean status; // true for available, false for sold out
+    public boolean status = true; // true for available, false for sold out
     public String urlToImageFolder;
     public List<String> urlToImage;
-    public boolean favorite;
+    public boolean favorite = false;
     public String category; //TBD
     public String rating;
 
-    public Product(String seller, String description, String postedAt, String title, String price, List<String> urlToImage, String id, boolean favorite, String location) {
+    public Product(String seller, String description, String title, String price, List<String> urlToImage, String id, boolean favorite, String location) {
         this.seller = seller;
         this.description = description;
-        this.postedAt = postedAt;
+        this.postedAt = new Date().getTime();
         this.title = title;
         this.price = price;
         this.urlToImage = urlToImage;
@@ -46,7 +47,7 @@ public class Product implements Serializable {
         this.location = location;
         this.lat = lat;
         this.lon = lon;
-        postedAt = "09082020";
+        this.postedAt = new Date().getTime();
         this.title = title;
         this.price = price;
         id = "234";
@@ -56,6 +57,11 @@ public class Product implements Serializable {
         favorite = true;
         category = "TBD";
     }
+
+    public Product(String id){ // for post feature
+        this.id = id;
+    }
+
 
     @Override
     public String toString() {
@@ -83,6 +89,46 @@ public class Product implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(seller, description, postedAt, title, price);
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public void setUrlToImageFolder(String urlToImageFolder) {
+        this.urlToImageFolder = urlToImageFolder;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
+
+    public void setPostedAt(long postedAt) {
+        this.postedAt = postedAt;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
 

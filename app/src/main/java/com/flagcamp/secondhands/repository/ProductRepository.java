@@ -68,32 +68,37 @@ public class ProductRepository {
         return everyThingLiveData;
     }
 
-//    // Test search feature with dummy data
-//    public LiveData<ProductResponse> searchProducts(SearchViewModel.Cell cell){
-//        MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
-//        everyThingLiveData.setValue(generateDummyProductDataForHomePage());
+    // Test search feature with dummy data
+    public LiveData<ProductResponse> searchProducts(SearchViewModel.Cell cell){
+        MutableLiveData<ProductResponse> everyThingLiveData = new MutableLiveData<>();
+        everyThingLiveData.setValue(generateDummyProductDataForHomePage());
+        return everyThingLiveData;
+    }
+
+//    public LiveData<SearchResponse> searchProducts(SearchViewModel.Cell cell){
+//        MutableLiveData<SearchResponse> everyThingLiveData = new MutableLiveData<>();
+//        api.search(cell.searchInput, cell.categoryInput, cell.locationInput, cell.page, cell.pageSize)
+//                .enqueue(new Callback<SearchResponse>() {
+//                    @Override
+//                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+//                        if (response.isSuccessful()) {
+//                            everyThingLiveData.setValue(response.body());
+//                        } else {
+//                            everyThingLiveData.setValue(null);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(Call<SearchResponse> call, Throwable t) {
+//                        everyThingLiveData.setValue(null);
+//                    }
+//                });
 //        return everyThingLiveData;
 //    }
 
-    public LiveData<SearchResponse> searchProducts(SearchViewModel.Cell cell){
-        MutableLiveData<SearchResponse> everyThingLiveData = new MutableLiveData<>();
-        api.search(cell.searchInput, cell.categoryInput, cell.locationInput)
-                .enqueue(new Callback<SearchResponse>() {
-                    @Override
-                    public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                        if (response.isSuccessful()) {
-                            everyThingLiveData.setValue(response.body());
-                        } else {
-                            everyThingLiveData.setValue(null);
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<SearchResponse> call, Throwable t) {
-                        everyThingLiveData.setValue(null);
-                    }
-                });
-        return everyThingLiveData;
+    public void postProduct(Product product) {
+        // TODO: split product field into parts of url parameters
+        api.postProduct();
     }
 
     public ProductResponse generateDummyProductDataForHomePage(){
@@ -124,7 +129,7 @@ public class ProductRepository {
             }else{
                 urlToImage = urlToImage2;
             }
-            Product temp = new Product("seller: " + i, "description: " + i, "postedAt: " + i, "title: " + i, "price: " + i, urlToImage, ""+i, false, "location: " + i);
+            Product temp = new Product("seller: " + i, "description: " + i, "title: " + i, "price: " + i, urlToImage, ""+i, false, "location: " + i);
             tempCategories.get(i / 10).add(temp);
             products.add(temp);
         }

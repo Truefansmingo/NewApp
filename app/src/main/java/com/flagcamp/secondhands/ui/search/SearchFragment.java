@@ -9,13 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.flagcamp.secondhands.R;
 import com.flagcamp.secondhands.databinding.FragmentSearchBinding;
@@ -24,11 +27,17 @@ import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.repository.ProductRepository;
 import com.flagcamp.secondhands.repository.ProductViewModelFactory;
 
+import retrofit2.http.Headers;
+
 public class SearchFragment extends Fragment {
 
     private FragmentSearchBinding binding;
     private SearchViewModel viewModel;
     private SearchAdapter searchAdapter;
+    private int page = 1;
+    private int pageSize = 10;
+
+    private boolean isLoading = false;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -50,6 +59,38 @@ public class SearchFragment extends Fragment {
         binding.resultsRecyclerView.setAdapter(searchAdapter);
         binding.resultsRecyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
+        ProductRepository repository = new ProductRepository(requireContext());
+        viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(SearchViewModel.class);
+
+        // Scroll to bottom
+        binding.resultsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Toast.makeText(getContext(), "Page" + page, Toast.LENGTH_LONG).show();
+
+                    viewModel.setPage(page);
+                    viewModel.searchProducts()
+                            .observe(
+                                    getViewLifecycleOwner(),
+                                    productResponse -> {
+                                        if (productResponse != null) {
+                                            searchAdapter.setProducts(productResponse.products, page++, pageSize);
+                                        } else {
+                                            Log.d("search: ", "no product returned");
+                                        }
+                                    }
+                            );
+                    searchAdapter.notifyDataSetChanged();
+                }
+            }
+
+        });
+
+        viewModel.setPage(page);
+        viewModel.setPageSize(pageSize);
         setUpSearch();
         setUpCategory();
         setUpLocation();
@@ -82,15 +123,12 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        ProductRepository repository = new ProductRepository(requireContext());
-        viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository))
-                .get(SearchViewModel.class);
         viewModel.searchProducts()
                 .observe(
                         getViewLifecycleOwner(),
                         productResponse -> {
                             if (productResponse != null) {
-                                searchAdapter.setProducts(productResponse.products);
+                                searchAdapter.setProducts(productResponse.products, page++, pageSize);
                             } else {
                                 Log.d("search: ", "no product returned");
                             }
@@ -131,4 +169,6 @@ public class SearchFragment extends Fragment {
             }
         });
     }
+
+
 }

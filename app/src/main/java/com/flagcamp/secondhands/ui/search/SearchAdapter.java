@@ -21,8 +21,16 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     private List<Product> productList = new ArrayList<>();
 
     // 1. Supporting data:
-    public void setProducts(List<Product> productList) {
-        this.productList.clear();
+    public void setProducts(List<Product> productList, int page, int pageSize) {
+        if (page == 1) {
+            this.productList.clear();
+        } else if (page > 2) {
+            List<Product> newList = new ArrayList<>();
+            for (int i = pageSize; i < this.productList.size(); i++) {
+                newList.add(this.productList.get(i));
+            }
+            this.productList = newList;
+        }
         this.productList.addAll(productList);
         notifyDataSetChanged();
     }

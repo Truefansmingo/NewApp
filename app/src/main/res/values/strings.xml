@@ -19,6 +19,9 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="facebook_app_id">246547470051744</string>
+    <string name="fb_login_protocol_scheme">fb246547470051744</string>
+
     <string-array name="category">
         <item>All Categories</item>
         <item>Baby &amp; kids</item>

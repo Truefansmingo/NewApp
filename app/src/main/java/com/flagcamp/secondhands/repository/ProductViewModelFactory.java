@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.flagcamp.secondhands.ui.fav.FavViewModel;
 import com.flagcamp.secondhands.ui.home.HomeViewModel;
+import com.flagcamp.secondhands.ui.post.PostViewModel;
 import com.flagcamp.secondhands.ui.productDetail.ProductDetailViewModel;
 import com.flagcamp.secondhands.ui.search.SearchViewModel;
 
@@ -27,6 +28,8 @@ public class ProductViewModelFactory implements ViewModelProvider.Factory{
             return (T) new FavViewModel(repository);
         } else if (modelClass.isAssignableFrom(SearchViewModel.class)) {
             return (T) new SearchViewModel(repository);
+        } else if (modelClass.isAssignableFrom(PostViewModel.class)) {
+            return (T) new PostViewModel(repository);
         }else{
             throw new IllegalStateException("Unknown ViewModel");
         }

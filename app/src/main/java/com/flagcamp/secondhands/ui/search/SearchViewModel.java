@@ -16,6 +16,8 @@ public class SearchViewModel extends ViewModel {
     private final MutableLiveData<String> searchInput = new MutableLiveData<>();
     private final MutableLiveData<String> categoryInput = new MutableLiveData<>("");
     private final MutableLiveData<String> locationInput = new MutableLiveData<>("");
+    private int page;
+    private int pageSize;
 
     public SearchViewModel(ProductRepository repository) {
         this.repository = repository;
@@ -32,20 +34,28 @@ public class SearchViewModel extends ViewModel {
         query = query.equals("All States") ? "N/A" : query;
         locationInput.setValue(query);
     }
+    public void setPage(int page) {
+        this.page = page;
+    }
 
-    public LiveData<SearchResponse> searchProducts() {
-        CustomLiveData input = new CustomLiveData(searchInput, categoryInput, locationInput);
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
+
+    public LiveData<ProductResponse> searchProducts() { // if dummy data -> ProductResponse, if db data --> SearchResponse
+        CustomLiveData input = new CustomLiveData(searchInput, categoryInput, locationInput, page, pageSize);
         return Transformations.switchMap(input, repository::searchProducts);
     }
 
     private static class CustomLiveData extends MediatorLiveData<Cell> {
         public CustomLiveData(MutableLiveData<String> searchInput,
                               MutableLiveData<String> categoryInput,
-                              MutableLiveData<String> locationInput) {
+                              MutableLiveData<String> locationInput,
+                              int page, int pageSize) {
             addSource(searchInput, new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
-                    setValue(new Cell(s, categoryInput.getValue(), locationInput.getValue()));
+                    setValue(new Cell(s, categoryInput.getValue(), locationInput.getValue(), page, pageSize));
                 }
             });
         }
@@ -55,11 +65,15 @@ public class SearchViewModel extends ViewModel {
         public String searchInput;
         public String categoryInput;
         public String locationInput;
+        public int page;
+        public int pageSize;
 
-        public Cell(String searchInput, String categoryInput, String locationInput) {
+        public Cell(String searchInput, String categoryInput, String locationInput, int page, int pageSize) {
             this.searchInput = searchInput;
             this.categoryInput = categoryInput;
             this.locationInput = locationInput;
+            this.page = page;
+            this.pageSize = pageSize;
         }
     }
 }

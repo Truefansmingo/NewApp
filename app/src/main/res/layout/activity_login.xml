@@ -21,8 +21,9 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center_horizontal"
-            android:src="@drawable/ic_post_24dp" />
-
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_post_24dp"
+            android:visibility="visible" />
 
         <TextView
             android:layout_width="match_parent"
@@ -32,8 +33,9 @@
             android:shadowColor="#0E0E0E"
             android:text="Market Five"
             android:textAlignment="center"
-            android:textColor="#000000"
+            android:textColor="#4CAF50"
             android:textSize="45sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,47 +49,25 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="100dp"/>
+            android:layout_height="100dp" />
 
 
-        <Button
+        <com.shobhitpuri.custombuttons.GoogleSignInButton
             android:id="@+id/google_signIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/googleg_standard_color_18"
-            android:elevation="8dp"
-            android:text="Sign In with Google"
-            android:textColor="#fff"
-            android:background="#70FF0000"/>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:text="Sign In with Google" />
 
 
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/facebook_login_button"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
-            android:layout_marginTop="160dp">
-
-
-
-
-        </LinearLayout>
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:gravity="bottom"
-            android:includeFontPadding="false"
-            android:shadowColor="#0E0E0E"
-            android:text="Team 5 in 2020"
-            android:textAlignment="center"
-            android:textColor="#000000"
-            android:textSize="14sp" />
-
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp" />
 
     </LinearLayout>
 
