@@ -36,6 +36,11 @@ public class MainActivity extends AppCompatActivity {
      public boolean onSupportNavigateUp() {
             return navController.navigateUp();
      }
+
+     //Change each fragment Action Bar Title; we can delete it if Action bar is no longer needed;
+     public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+     }
 }
 
 
