@@ -112,7 +112,6 @@ public class ProductDetailFragment extends Fragment {
 
             }
 
-
         });
 
 

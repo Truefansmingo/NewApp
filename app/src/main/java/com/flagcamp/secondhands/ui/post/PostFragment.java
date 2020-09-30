@@ -36,6 +36,13 @@
 
 package com.flagcamp.secondhands.ui.post;;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -53,6 +60,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.webkit.MimeTypeMap;
 import android.widget.AdapterView;
@@ -62,6 +70,8 @@ import android.widget.Toast;
 import com.flagcamp.secondhands.databinding.FragmentPostBinding;
 import com.flagcamp.secondhands.model.Product;
 import com.flagcamp.secondhands.repository.ProductRepository;
+import com.flagcamp.secondhands.repository.ProductViewModelFactory;
+import com.flagcamp.secondhands.ui.search.SearchViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -76,6 +86,7 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Date;
+import java.util.List;
 
 public class PostFragment extends Fragment {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -90,6 +101,9 @@ public class PostFragment extends Fragment {
     private Product product;
     private String category;
     private String state;
+
+    private double latitude;
+    private double longitude;
 
     public PostFragment() {
         // Required empty public constructor
@@ -215,7 +229,9 @@ public class PostFragment extends Fragment {
             product.setDescription(binding.productDescription.getText().toString());
             product.setPrice(binding.productPrice.getText().toString());
 
-            // TODO: get device lon and lat
+            initLocation();
+            product.setLat(latitude);
+            product.setLon(longitude);
 
             product.setCategory(category);
             product.setLocation(state);
@@ -225,10 +241,36 @@ public class PostFragment extends Fragment {
 
             // TODO: post to back-end db
             ProductRepository repository = new ProductRepository(requireContext());
+            viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(PostViewModel.class);
             viewModel.postProduct(product);
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private void initLocation() {
+        //permission deny, give a default location
+        if (Build.VERSION.SDK_INT >= 23
+                && getActivity().checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            LocationManager lm =
+                    (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+            //here must use list<string> in case one provider is null
+            List<String> providers = lm.getProviders(true);
+            Location location = null;
+            for (String provider : providers) {
+                Location l = lm.getLastKnownLocation(provider);
+                if (l == null) {
+                    continue;
+                }
+                if (location == null || l.getAccuracy() < location.getAccuracy()) {
+                    // Found best last known location: %s", l);
+                    location = l;
+                }
+            }
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+        }
+    }
 
     private void setUpCategory() {
         ArrayAdapter<CharSequence> categorySpinnerAdapter = ArrayAdapter.createFromResource(getContext(), R.array.category, android.R.layout.simple_spinner_item);
