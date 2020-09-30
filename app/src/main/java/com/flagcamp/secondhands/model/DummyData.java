@@ -9,6 +9,7 @@ import java.util.Map;
 
 public class DummyData {
     Map<String, List<Product>> map;
+    List<Product> products;
     private final String tag =  DummyData.this.getClass().getSimpleName();
     //data source
     //String seller, String description, String title, String price
@@ -18,19 +19,20 @@ public class DummyData {
             "Sell_Two","This is a table","Los Angeles",34.0522342,-118.2436849,"Table","$50");
 
     Product p3 = new Product(
-            "Sell_Three","This is a watch","Houston",29.7604267,-95.3698028,"Watch","$100");
+            "Sell_Three","This is a watch","Bay Area",37.386051,-122.0835855,"Watch","$100");
 
     Product p4 = new Product(
-            "Sell_Three","This is a shoe","St. Petersburg",27.773056,-82.64,"Shoe","$10");
+            "Sell_Three","This is a shoe","Bay Area",37.18,-122.28,"Shoe","$10");
 
     Product p5 = new Product(
-            "Sell_Two","This is a car","Nashville-Davidson",36.1626638,-86.7816016,"Car","$2500");
+            "Sell_Two","This is a car","Bay Area",37.58,-121.88,"Car","$2500");
 
 
     User user1= new User("1", "wleijf");
     User user2 = new User("2", "sdf");
     private final String id1 = user1.userId;
     private final String  id2 = user2.userId;
+
     //create dummy data
     //user one has p1,p2 fav; user two has p3 fav
     public DummyData(){
@@ -44,6 +46,12 @@ public class DummyData {
         for(int i = 0; i <10; i++){
             map.get(id2).add(p3);
         }
+        products = new ArrayList<>();
+        products.add(p1);
+        products.add(p2);
+        products.add(p3);
+        products.add(p4);
+        products.add(p5);
 
     }
 
@@ -62,6 +70,22 @@ public class DummyData {
         Log.d(tag, "List size is "+ productList.size() );
         return true;
     }
+    public List<Product> getProductInfo(double lat, double lon){
+        //just render the markers in the scope that map view
+        double minLon = lon-0.25;
+        double maxLon = lon+0.25;
+        double minLat = lat-0.25;
+        double maxLat = lat+0.25;
+
+        List<Product> res = new ArrayList<>();
+        for(Product p: products){
+            if(p.lat >=minLat && p.lat <= maxLat && p.lon >=minLon && p.lon <=maxLon){
+                res.add(p);
+            }
+        }
+        return res;
+    }
+
 
 
 

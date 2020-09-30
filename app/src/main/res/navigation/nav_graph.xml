@@ -104,11 +104,15 @@
             android:id="@+id/action_navigation_detail_to_navigation_message"
             app:destination="@id/navigation_message" />
     </fragment>
+
     <fragment
         android:id="@+id/navigation_map"
         android:name="com.flagcamp.secondhands.ui.map.MapFragment"
         android:label="@string/app_map"
         tools:layout="@layout/fragment_map">
+        <action
+            android:id="@+id/action_navigation_map_to_navigation_details"
+            app:destination="@id/navigation_detail"/>
     </fragment>
 
 

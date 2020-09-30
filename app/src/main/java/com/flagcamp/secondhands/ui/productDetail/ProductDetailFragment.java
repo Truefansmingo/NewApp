@@ -103,8 +103,6 @@ public class ProductDetailFragment extends Fragment {
             imageList.add(new Image(s));
         }
 
-
-
         ProductRepository repository = new ProductRepository(requireContext());
         viewModel = new ViewModelProvider(this, new ProductViewModelFactory(repository)).get(ProductDetailViewModel.class);
         viewModel.setSearchInput("us");

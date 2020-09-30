@@ -101,6 +101,13 @@ public class ProductRepository {
         api.postProduct();
     }
 
+    public LiveData<List<Product>> getAllProductInfo(double lan, double lon){
+        List<Product> list = data.getProductInfo(lan,lon);
+        MutableLiveData<List<Product>> res = new MutableLiveData<>();
+        res.setValue(list);
+        return  res;
+    }
+
     public ProductResponse generateDummyProductDataForHomePage(){
         List<List<Product>> tempCategories = new ArrayList<>();
         for(int i = 0; i < 7; i++){
