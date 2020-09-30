@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.flagcamp.secondhands.model.DummyData;
 import com.flagcamp.secondhands.model.Product;
@@ -51,14 +52,11 @@ public class FavFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FavProductAdapter favProductAdapter = new FavProductAdapter();
 
-
-
-
         favProductAdapter.setItemCallBack(new FavProductAdapter.ItemCallBack() {
             @Override
             public void onOpenDetail(Product product) {
                 Log.d("onOpenProduct", product.toString());
-                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails();
+                FavFragmentDirections.ActionNavigationFavToNavigationDetails direction = FavFragmentDirections.actionNavigationFavToNavigationDetails(product);
                 direction.setProduct(product);
                 NavHostFragment.findNavController(FavFragment.this).navigate(direction);
             }
@@ -87,16 +85,11 @@ public class FavFragment extends Fragment {
                                 Log.d(tag, favProducts.toString());
                                 favProductAdapter.updateFavList(favProducts);
                             }else {
-                                Log.d(tag, "please add your first favoriabled produts");
+                                Toast.makeText(getContext(), "Please favorite your products",Toast.LENGTH_SHORT).show();
                             }
                         });
 
     }
 
-//    @Override
-//    public void onDestroyView() {
-//        super.onDestroyView();
-//        viewModel.onCancel();
-//    }
 
 }

@@ -27,12 +27,12 @@ public class Product implements Serializable {
     public boolean favorite;
     public String category; //TBD
 
-    public Product(String seller, String description, String title, String price) {
+    public Product(String seller, String description, String location, double lat, double lon, String title, String price) {
         this.seller = seller;
         this.description = description;
-        location = "CA";
-        lat = 0.0;
-        lon = 0.0;
+        this.location = location;
+        this.lat = lat;
+        this.lon = lon;
         postedAt = "09082020";
         this.title = title;
         this.price = price;

@@ -31,6 +31,13 @@ public class ProductRepository {
 //        AsyncTask.execute(
 //                ()->data.deleteFav(id,product));
     }
+    public LiveData<List<Product>> getAllProductInfo(double lan, double lon){
+       List<Product> list = data.getProductInfo(lan,lon);
+        MutableLiveData<List<Product>> res = new MutableLiveData<>();
+        res.setValue(list);
+        return  res;
+    }
+
     public void onCancel() {
         if(asyncTask != null) {
             asyncTask.cancel(true);
